@@ -17,13 +17,14 @@ class Users extends Migration
 
             $table->increments('id');
 
-            $table->string('name', 255)->nullable(false);
+            $table->string('name', 255)->nullable();
 
-            $table->string('email', 255)->nullable(false);
+            $table->string('email', 255);
 
-            $table->string('password', 255)->nullable(false);
+            $table->string('password', 255);
 
-            $table->longText('bio');
+            $table->longText('bio')->nullable();
+            ;
 
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
