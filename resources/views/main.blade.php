@@ -19,6 +19,6 @@
             </div>
         </div>
     </div>
-
+    <h2>これはmainです</h2>
 </div>
 @endsection
