@@ -48,4 +48,12 @@ class PostsController extends Controller
         return redirect('/main');
 
     }
+    //  投稿の更新
+    public function updateForm()
+    {
+        $post = DB::table('posts')
+            ->where('id', 1)
+            ->first();
+        return view('updateForm', compact('posts'));
+    }
 }
