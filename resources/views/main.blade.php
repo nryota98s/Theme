@@ -23,7 +23,7 @@
 <div class="user_info">
     <img class="icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
   <li class="nav-item dropdown user_name">
-    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}
+    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ Auth::user()->id }}/prof-update" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}
     </a>
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -69,6 +69,7 @@
 <td class="post_i">{{ $list->created_at }}</td>
 
 <td class="post_b" ><a class="btn btn-primary" href="/post/{{ $list->id }}/update-form">更新</a></td>
+
 
 </tr>
 

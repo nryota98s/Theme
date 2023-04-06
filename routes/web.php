@@ -31,5 +31,9 @@ Route::get('/create-form', 'PostsController@createForm');
 Route::post('/post/create', 'PostsController@create');
 // 投稿の編集ページ
 Route::get('post/{id}/update-form', 'PostsController@updateForm');
-
+// 投稿の編集
 Route::post('/post/update', 'PostsController@update');
+// プロフィールの編集のページ
+Route::get('{userId}/prof-update', 'PostsController@profileupdateForm');
+// プロフィールの編集
+Route::post('/profile/update', 'PostsController@profileupdate');

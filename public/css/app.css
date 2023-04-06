@@ -76,3 +76,27 @@ a {
 }
 
 /* create.blade.phpここまで */
+
+/*prof-update.blade.php　ここから  */
+/* 元々のアイコン画像 */
+.old_icon {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 200px;
+  margin: 16px 0;
+}
+
+/* アイコンのフォーム */
+.icon_f {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* アイコンのinput */
+.i-control {
+  margin: 16px 0;
+}
+
+/*prof-update.blade.php　ここまで  */
