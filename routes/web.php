@@ -29,3 +29,7 @@ Route::get('/main', 'PostsController@index');
 Route::get('/create-form', 'PostsController@createForm');
 // 投稿ページの表示
 Route::post('/post/create', 'PostsController@create');
+// 投稿の編集ページ
+Route::get('post/{id}/update-form', 'PostsController@updateForm');
+
+Route::post('/post/update', 'PostsController@update');

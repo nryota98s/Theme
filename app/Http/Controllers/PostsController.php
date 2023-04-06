@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Auth;
+
 class PostsController extends Controller
 {
     // postsの一覧表示
@@ -48,12 +50,45 @@ class PostsController extends Controller
         return redirect('/main');
 
     }
-    //  投稿の更新
-    public function updateForm()
+    //  投稿の更新ページ
+    public function updateForm($id)
     {
+
         $post = DB::table('posts')
-            ->where('id', 1)
+
+            ->where('id', $id)
+
             ->first();
-        return view('updateForm', compact('posts'));
+
+        return view('updateForm', ['post' => $post]);
+
     }
+
+    // 投稿の更新
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'upPost' => ['required', 'regex:/^[^\s]+([\s　][^\s]+)*$/u', 'max:150']
+
+        ]);
+
+        $id = $request->input('id');
+
+        $up_post = $request->input('upPost');
+
+        DB::table('posts')
+
+            ->where('id', $id)
+
+            ->update(
+
+                ['contents' => $up_post]
+
+            );
+
+        return redirect('/main');
+
+    }
+
+
 }

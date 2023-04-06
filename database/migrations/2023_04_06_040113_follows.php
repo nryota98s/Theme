@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Users extends Migration
+class Follows extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,24 @@ class Users extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('follows', function (Blueprint $table) {
 
             $table->increments('id');
 
-            $table->string('name', 255);
+            $table->unsignedBigInteger('user_id');
 
-            $table->string('email', 255);
-
-            $table->string('password', 255);
-
-            $table->longText('bio')->nullable();
-
-            $table->string('icon')->default('default.png')->nullable();
+            $table->unsignedBigInteger('followed_user_id');
 
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 
+            // 外部キー制約
+            // usersのidが消えたらuser_idも消える
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // usersのidが消えたらfollowed_user_idも消える
+            $table->foreign('followed_user_id')->references('id')->on('users')->onDelete('cascade');
         });
-
     }
 
     /**
@@ -42,6 +40,6 @@ class Users extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::dropIfExists('follows');
     }
 }
