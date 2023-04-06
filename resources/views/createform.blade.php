@@ -19,7 +19,7 @@
 
 <header>
 
-<h1 class='page-header'>Laravelを使った投稿機能の実装</h1>
+
 
 </header>
 
@@ -38,12 +38,12 @@
 
 <div class="form-group">
 
-{!! Form::input('text', 'name',Auth::user()->name, ['required', 'class' => 'form-control', 'placeholder' => 'ユーザーネーム']) !!}
-{!! Form::input('text', 'newPost', null, ['required', 'class' => 'form-control', 'placeholder' => '投稿内容']) !!}
+{!! Form::input('text', 'name',Auth::user()->name, ['required', 'class' => ['form-control','form_n'], 'placeholder' => 'ユーザーネーム']) !!}
+{!! Form::input('text', 'newPost', null, ['required', 'class' => ['form-control','form_p'], 'placeholder' => '投稿内容']) !!}
 
 </div>
 
-<button type="submit" class="btn btn-success pull-right">追加</button>
+<button type="submit" class="btn btn-success pull-right s_btn">追加</button>
 
 {!! Form::close() !!}
 

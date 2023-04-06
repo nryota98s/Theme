@@ -1,0 +1,77 @@
+/* 共通設定ここから */
+li {
+  list-style: none;
+
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* 共通設定ここまで */
+
+/* main.blade.phpここから */
+/* icon写真 */
+.icon {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 200px;
+  border: 2px solid black;
+}
+
+/* iconと名前が入っているもの */
+.user_info {
+  display: flex;
+  justify-content: center;
+}
+
+/* ユーザーネーム */
+.user_name {
+  text-align: center;
+  margin: auto 0;
+}
+
+/* 中身 */
+.container {
+  text-align: center;
+}
+
+/* 投稿内容一覧 */
+.tl {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+/* 投稿内容 */
+.post_i {
+  padding: 16px 0;
+  border-bottom: 1px solid black;
+}
+
+/* 編集・変更ボタン */
+.post_b {
+  padding-left: 8px;
+
+}
+
+
+/* main.blade.phpここまで */
+
+/* create.blade.phpここから */
+/* フォーム */
+.form_n {
+  width: 200px;
+}
+
+.form_p {
+  width: 200px;
+}
+
+/* 登録ボタン */
+.s_btn {
+  margin-top: 32px;
+}
+
+/* create.blade.phpここまで */

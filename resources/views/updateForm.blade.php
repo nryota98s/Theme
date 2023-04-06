@@ -20,7 +20,7 @@
 
 <header>
 
-<h1 class='page-header'>Laravelを使った投稿機能の実装</h1>
+
 
 </header>
 
@@ -53,7 +53,7 @@
 
 <footer>
 
-<small>Laravel@dawn.curriculum</small>
+
 
 </footer>
 
