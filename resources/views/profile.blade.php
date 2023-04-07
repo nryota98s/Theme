@@ -25,7 +25,7 @@
 </header>
 
 <div class='container'>
-<a href="http://127.0.0.1:8000/main">まいん</a>
+<a href="http://127.0.0.1:8000/main">main</a>
 <h2 class='page-header'>{{Auth::user()->name}}</h2>
   <div class="alert alert-danger">
     <ul>
