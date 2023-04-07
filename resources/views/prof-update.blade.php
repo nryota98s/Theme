@@ -27,14 +27,12 @@
 <div class='container'>
 
 <h2 class='page-header'>ユーザー情報を変更する</h2>
-  <div class="alert alert-danger">
-    <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
+@if (session('error'))
 
+
+{{ session('error') }}
+
+@endif
 {!! Form::open(['url' => '/profile/update', 'enctype' => 'multipart/form-data']) !!}
 
 <div class="form-group">
@@ -49,7 +47,8 @@
   <p>アイコン画像</p>
   <img class="old_icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
   {{ Form::file('image', ['class' => 'i-control']) }}
-
+  <p>パスワード</p>
+{{Form::password('password', ['class' => 'i-control'])}}
 </div>
 
 </div>

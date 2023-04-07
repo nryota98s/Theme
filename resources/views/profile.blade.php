@@ -38,7 +38,7 @@
 <div class="icon_f">
   <img class="icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
 
-@if(Auth::check() && Auth::user()->bio == null)
+@if(Auth::user()->bio == null)
     <p>プロフィールの変更から自己紹介を追加しましょう！</p>
 @else
     <p>{{ Auth::user()->bio }}</p>
@@ -56,6 +56,10 @@
 
 <table class='table table-hover tl'>
 
+@if($postcheck== 0)
+    <p class="alert">投稿をしてみましょう!</p>
+    <p class="pull-right p_btn"><a class="btn btn-success" href="/create-form">投稿する</a></p>
+@endif
 <tr>
 
 <th>ユーザーネーム</th>
@@ -65,6 +69,7 @@
 <th>投稿日時</th>
 <th></th>
 </tr>
+
 
 @foreach ($posts as $posts)
 

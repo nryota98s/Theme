@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Storage; // Added namespace import
 
+use Illuminate\Support\Facades\Hash;
 
 class PostsController extends Controller
 {
@@ -112,6 +113,7 @@ class PostsController extends Controller
         $id = $request->input('id');
         $name = $request->input('upName');
         $bio = $request->input('upBio');
+        $pass = $request->input('password');
 
         // アイコン画像
         if ($request->hasFile('image')) {
@@ -131,6 +133,17 @@ class PostsController extends Controller
             //imageにファイルがない場合、中身が空のためimageカラムの中身は変わらない
             $filename = null;
         }
+
+        try {
+            if (!Auth::user() || !Hash::check($pass, Auth::user()->password)) {
+                // Set error message and redirect
+                return redirect()->back()->with('error', 'パスワードが正しくありません');
+            }
+        } catch (\Exception $e) {
+            // Handle authentication exceptions
+            return redirect()->back()->with('error', 'Unexpected error occurred.');
+        }
+
 
         DB::table('users')
             ->where('id', $id)
@@ -154,10 +167,10 @@ class PostsController extends Controller
         $followerCount = DB::table('follows')
             ->where('followed_user_id', Auth::user()->id)
             ->count();
-
-
-
-
+        // 投稿があるかチェックする
+        $postcheck = DB::table('posts')
+            ->where('user_name', Auth::user()->name)
+            ->count();
 
         $post = DB::table('users')
 
@@ -165,7 +178,7 @@ class PostsController extends Controller
 
             ->first();
 
-        return view('profile', ['post' => $post, "posts" => $posts, 'followingCount' => $followingCount, 'followerCount' => $followerCount]);
+        return view('profile', ['post' => $post, "posts" => $posts, 'followingCount' => $followingCount, 'followerCount' => $followerCount, "postcheck" => $postcheck]);
 
     }
 

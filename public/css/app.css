@@ -94,6 +94,15 @@ a {
   border-radius: 10px;
 }
 
+.alert,
+.p_btn {
+  text-align: center;
+}
+
+.p_btn {
+  display: block;
+}
+
 /* profile.blade.php　ここまで */
 
 /*prof-update.blade.php　ここから  */
