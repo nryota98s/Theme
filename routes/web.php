@@ -37,3 +37,5 @@ Route::post('/post/update', 'PostsController@update');
 Route::get('{userId}/prof-update', 'PostsController@profileupdateForm');
 // プロフィールの編集
 Route::post('/profile/update', 'PostsController@profileupdate');
+// プロフィールのページ
+Route::get('{userId}/profile', 'PostsController@profile');

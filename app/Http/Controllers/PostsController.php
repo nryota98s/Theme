@@ -139,5 +139,34 @@ class PostsController extends Controller
         return redirect('/main');
     }
 
+    // profileのページ
+    public function profile()
+    {
+        // ログイン中のユーザーの投稿一覧
+        $posts = DB::table('posts')
+            ->where('user_name', Auth::user()->name)
+            ->get();
+        // フォロー中の人数
+        $followingCount = DB::table('follows')
+            ->where('user_id', Auth::user()->id)
+            ->count();
+        // フォロワーの人数
+        $followerCount = DB::table('follows')
+            ->where('followed_user_id', Auth::user()->id)
+            ->count();
+
+
+
+
+
+        $post = DB::table('users')
+
+            ->where('id', Auth::user()->id)
+
+            ->first();
+
+        return view('profile', ['post' => $post, "posts" => $posts, 'followingCount' => $followingCount, 'followerCount' => $followerCount]);
+
+    }
 
 }

@@ -50,7 +50,6 @@
   <img class="old_icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
   {{ Form::file('image', ['class' => 'i-control']) }}
 
-
 </div>
 
 </div>

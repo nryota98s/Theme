@@ -47,7 +47,7 @@ a {
 
 /* 投稿内容 */
 .post_i {
-  padding: 16px 0;
+  padding: 16px 8px;
   border-bottom: 1px solid black;
 }
 
@@ -76,6 +76,25 @@ a {
 }
 
 /* create.blade.phpここまで */
+
+/* profile.blade.php　ここから */
+.f_info {
+  display: flex;
+  justify-content: center;
+}
+
+.f_number {
+  padding: 0 32px;
+}
+
+.p_update {
+  padding: 8px;
+  margin: 8px;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+/* profile.blade.php　ここまで */
 
 /*prof-update.blade.php　ここから  */
 /* 元々のアイコン画像 */
