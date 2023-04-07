@@ -24,7 +24,7 @@ Auth::routes();
 Route::get('/main', 'HomeController@index')->name('main');
 
 // 投稿一覧ページ
-Route::get('/main', 'PostsController@index');
+Route::get('/main', 'PostsController@index')->middleware('auth');
 // 投稿ページの表示
 Route::get('/create-form', 'PostsController@createForm');
 // 投稿ページの表示

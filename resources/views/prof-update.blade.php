@@ -27,12 +27,14 @@
 <div class='container'>
 
 <h2 class='page-header'>ユーザー情報を変更する</h2>
+{{-- パスワードのエラーがあった際にエラーを表示 --}}
 @if (session('error'))
 
 
 {{ session('error') }}
 
 @endif
+{{--'enctype':ファイルを含むフォームデータをサーバーに送信するために使用されるもの。 --}}
 {!! Form::open(['url' => '/profile/update', 'enctype' => 'multipart/form-data']) !!}
 
 <div class="form-group">

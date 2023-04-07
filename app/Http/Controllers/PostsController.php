@@ -93,6 +93,38 @@ class PostsController extends Controller
         return redirect('/main');
 
     }
+
+
+    // profileのページ
+    public function profile()
+    {
+        // ログイン中のユーザーの投稿一覧
+        $posts = DB::table('posts')
+            ->where('user_name', Auth::user()->name)
+            ->get();
+        // フォロー中の人数
+        $followingCount = DB::table('follows')
+            ->where('user_id', Auth::user()->id)
+            ->count();
+        // フォロワーの人数
+        $followerCount = DB::table('follows')
+            ->where('followed_user_id', Auth::user()->id)
+            ->count();
+        // 投稿件数の取得
+        $postcheck = DB::table('posts')
+            ->where('user_name', Auth::user()->name)
+            ->count();
+
+
+        return view('profile', [
+            "posts" => $posts,
+            'followingCount' => $followingCount,
+            'followerCount' => $followerCount,
+            "postcheck" => $postcheck
+        ]);
+
+    }
+
     // profileの更新ページ
     public function profileupdateForm()
     {
@@ -106,6 +138,7 @@ class PostsController extends Controller
         return view('/prof-update', ['post' => $post]);
 
     }
+
     // profileの更新
 
     public function profileupdate(Request $request)
@@ -126,24 +159,19 @@ class PostsController extends Controller
             Storage::disk('public')->putFileAs('icon', $file, $filename);
         }
 
-        // もしimageの中身が空でない場合はそのままにする
+        // もしimageの中身がある場合はそのままにする
         else if (!empty(Auth::user()->image)) {
             $filename = Auth::user()->image;
         } else {
-            //imageにファイルがない場合、中身が空のためimageカラムの中身は変わらない
+            //imageにファイル名がない場合、中身が空のためimageカラムの中身は変わらない
             $filename = null;
         }
 
-        try {
-            if (!Auth::user() || !Hash::check($pass, Auth::user()->password)) {
-                // Set error message and redirect
-                return redirect()->back()->with('error', 'パスワードが正しくありません');
-            }
-        } catch (\Exception $e) {
-            // Handle authentication exceptions
-            return redirect()->back()->with('error', 'Unexpected error occurred.');
+        // ハッシュ化されたパスワードとユーザーが入力したパスワードが一致しない場合
+        if (!Hash::check($pass, Auth::user()->password)) {
+            // エラーを"prof-update"に返す(エラーだった場合に直前のデータを残すために->back()を使用)
+            return redirect()->back()->with('error', 'パスワードが正しくありません');
         }
-
 
         DB::table('users')
             ->where('id', $id)
@@ -152,34 +180,6 @@ class PostsController extends Controller
         return redirect('/main');
     }
 
-    // profileのページ
-    public function profile()
-    {
-        // ログイン中のユーザーの投稿一覧
-        $posts = DB::table('posts')
-            ->where('user_name', Auth::user()->name)
-            ->get();
-        // フォロー中の人数
-        $followingCount = DB::table('follows')
-            ->where('user_id', Auth::user()->id)
-            ->count();
-        // フォロワーの人数
-        $followerCount = DB::table('follows')
-            ->where('followed_user_id', Auth::user()->id)
-            ->count();
-        // 投稿があるかチェックする
-        $postcheck = DB::table('posts')
-            ->where('user_name', Auth::user()->name)
-            ->count();
 
-        $post = DB::table('users')
-
-            ->where('id', Auth::user()->id)
-
-            ->first();
-
-        return view('profile', ['post' => $post, "posts" => $posts, 'followingCount' => $followingCount, 'followerCount' => $followerCount, "postcheck" => $postcheck]);
-
-    }
 
 }
