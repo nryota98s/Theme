@@ -158,9 +158,8 @@ class PostsController extends Controller
             // publicディスクを使用して、('フォルダ名', ファイル, ファイル名)を指定して保存
             Storage::disk('public')->putFileAs('icon', $file, $filename);
         }
-
-        // もしimageの中身がある場合はそのままにする
-        else if (!empty(Auth::user()->image)) {
+        // imageがdefalut.png(初期状態)でない場合
+        else if (Auth::user()->image != 'default.png') {
             $filename = Auth::user()->image;
         } else {
             //imageにファイル名がない場合、中身が空のためimageカラムの中身は変わらない

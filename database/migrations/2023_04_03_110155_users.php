@@ -25,7 +25,7 @@ class Users extends Migration
 
             $table->longText('bio')->nullable();
 
-            $table->string('icon')->default('default.png');
+            $table->string('image')->default('default.png');
 
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
