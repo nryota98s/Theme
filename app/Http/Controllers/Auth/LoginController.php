@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+
 class LoginController extends Controller
 {
     /*
@@ -40,4 +41,15 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function maxAttempts()
+    {
+        return 3; // 最大3回までログイン試行を許可する
+    }
+
+    public function decayMinutes()
+    {
+        return 3; // 3分後にログイン試行回数をリセットする
+    }
+
 }
