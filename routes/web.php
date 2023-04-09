@@ -39,3 +39,7 @@ Route::get('{userId}/prof-update', 'PostsController@profileupdateForm');
 Route::post('/profile/update', 'PostsController@profileupdate');
 // プロフィールのページ
 Route::get('{userId}/profile', 'PostsController@profile');
+// プロフィールのフォロー中のユーザー一覧ページ
+Route::get('{userId}/profile/following', 'PostsController@following');
+// プロフィールのフォロワー一覧ページ
+Route::get('{userId}/profile/followed', 'PostsController@followed');

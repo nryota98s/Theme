@@ -12,12 +12,28 @@ use Illuminate\Support\Facades\Storage; // Added namespace import
 
 use Illuminate\Support\Facades\Hash;
 
+
 class PostsController extends Controller
 {
     // postsの一覧表示
     public function index()
     {
-        $list = DB::table('posts')->get();
+
+        $followers = DB::table('follows')
+            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
+            ->join('users', 'follows.followed_user_id', '=', 'users.id')
+            // user_idが現在ログインしているユーザーのidと一致するもので抽出
+            ->where('follows.user_id', '=', Auth::user()->id)
+            ->get();
+
+        // $followersから、nameカラムの値を取り出して配列に格納する
+        $followers_name = $followers->pluck('name')->toArray();
+
+        $list = DB::table('posts')
+            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを抽出
+            // whereInにすることで複数の値を指定することができる
+            ->whereIn('user_name', $followers_name)
+            ->get();
 
         return view('main', ['list' => $list]);
 
@@ -179,6 +195,48 @@ class PostsController extends Controller
         return redirect('/main');
     }
 
+    public function following()
+    {
+        $followers = DB::table('follows')
+            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
+            ->join('users', 'follows.followed_user_id', '=', 'users.id')
+            // user_idが現在ログインしているユーザーのidと一致するもので抽出
+            ->where('follows.user_id', '=', Auth::user()->id)
+            ->get();
 
+        // $followersから、nameカラムの値を取り出して配列に格納する
+        $followers_id = $followers->pluck('id')->toArray();
+
+
+
+        $list = DB::table('users')
+            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
+            ->whereIn('id', $followers_id)
+            ->get();
+
+
+        return view('following', ['list' => $list]);
+    }
+
+    public function followed()
+    {
+        $followers = DB::table('follows')
+            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
+            ->join('users', 'follows.user_id', '=', 'users.id')
+            // followed_user_idが現在ログインしているユーザーのidと一致するもので抽出
+            ->where('follows.followed_user_id', '=', Auth::user()->id)
+            ->get();
+
+        // $followersから、idカラムの値を取り出して配列に格納する
+        $followed_id = $followers->pluck('id')->toArray();
+
+        $list = DB::table('users')
+            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
+            ->whereIn('id', $followed_id)
+            ->get();
+
+
+        return view('followed', ['list' => $list]);
+    }
 
 }

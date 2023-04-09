@@ -45,8 +45,12 @@
 
 
 <div class="f_info">
-<p class="f_number">{{$followingCount}}フォロー中</p>
-<p class="f_number">{{$followerCount}}フォロワー</p>
+@php
+$user_id =Auth::user()->id;
+@endphp
+<a href="/{{$user_id}}/profile/following" class="f_number">{{$followingCount}}フォロー中</a>
+<a href=""></a>
+<a href="/{{$user_id}}/profile/followed" class="f_number">{{$followerCount}}フォロワー</a>
 </div>
 </div>
 
@@ -77,6 +81,7 @@
 
 <td class="post_i">{{ $posts->created_at }}</td>
 
+<td class="post_b" ><a class="btn btn-primary" href="/post/{{ $posts->id }}/update-form">更新</a></td>
 </tr>
 
 @endforeach
