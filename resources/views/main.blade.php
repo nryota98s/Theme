@@ -44,7 +44,7 @@
 
 <p class="pull-right"><a class="btn btn-success" href="/create-form">投稿する</a></p>
 
-
+<p>テストです</p>
 
 <table class='table table-hover tl'>
 
