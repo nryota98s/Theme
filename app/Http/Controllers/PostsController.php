@@ -250,4 +250,6 @@ class PostsController extends Controller
         return view('followed', ['list' => $list]);
     }
 
+// 更新用
+
 }
