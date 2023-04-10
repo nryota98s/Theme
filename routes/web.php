@@ -45,3 +45,4 @@ Route::get('{userId}/profile', 'PostsController@profile');
 Route::get('{userId}/profile/following', 'PostsController@following');
 // プロフィールのフォロワー一覧ページ
 Route::get('{userId}/profile/followed', 'PostsController@followed');
+//
