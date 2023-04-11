@@ -60,6 +60,9 @@
     <p class="alert">投稿をしてみましょう!</p>
     <p class="pull-right p_btn"><a class="btn btn-success" href="/create-form">投稿する</a></p>
     @endif
+
+    <a class="top_btn" href="/main">mainへ戻る</a>
+
     <tr>
 
       <th>ユーザーネーム</th>
@@ -93,10 +96,9 @@
 
   </div>
 
-  <a href="/main">main</a>
+
 
   <footer>
-    {{-- --}}
 
 
 
