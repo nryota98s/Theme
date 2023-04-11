@@ -140,3 +140,26 @@ a {
 }
 
 /* following.blade.php ここまで */
+
+/* search.blade.php　ここから */
+
+/* 検索結果 */
+.s_results {
+  text-align: center;
+}
+
+/* フォロー中・フォローする */
+.followed {
+  background-color: darkgrey;
+  text-align: center;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.follow {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+/* search.blade.php　ここまで */

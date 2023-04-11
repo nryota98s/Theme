@@ -13,7 +13,7 @@
 
   <p><a href="/main">← mainへ</a></p>
 
-  <h1>"{{ $keyword }}"の検索結果</h1>
+  <h1 class="s_results">"{{ $keyword }}"の検索結果</h1>
 
   <table class='table table-hover tl'>
 
@@ -31,20 +31,21 @@
 
     <tr>
 
-      <td><a href="">{{ $item->name }}</a></td>
+      <td><a href="f_name">{{ $item->name }}</a></td>
 
       <td>
-        {{ $id }}
+        @if(count(array_intersect([$item->id],$id)) > 0)
+        <p class="followed">フォロー中</p>
+        @else
+        <p class="follow">フォローする</p>
+        @endif
       </td>
-
-
-
 
     </tr>
 
     @endforeach
     @else
-    <p>検索結果は０件です</p>
+    <p class="s_results">検索結果は０件です</p>
     @endif
 
 

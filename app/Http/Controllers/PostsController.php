@@ -258,6 +258,7 @@ class PostsController extends Controller
         $keyword = $request->input('keyword');
         $items = DB::table('users')
             ->where('name', 'like', '%' . $keyword . '%')
+            ->where('id', '<>', Auth::user()->id)
             ->get();
 
         // ログインユーザーがフォローしているユーザー情報抽出
@@ -265,8 +266,10 @@ class PostsController extends Controller
             ->where('user_id', Auth::user()->id)
             ->get();
 
+        // $followedからfollowed_user_idを配列で抽出
+        $id = $followed->pluck('followed_user_id')->toArray();
 
-        return view('searchForm', ['keyword' => $keyword, 'items' => $items,]);
+        return view('searchForm', ['keyword' => $keyword, 'items' => $items, 'id' => $id]);
     }
 
 
