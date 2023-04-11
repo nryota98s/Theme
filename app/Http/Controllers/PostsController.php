@@ -110,6 +110,17 @@ class PostsController extends Controller
 
     }
 
+    // 投稿の削除
+    public function delete($id)
+    {
+
+        DB::table('posts')
+            ->where('id', $id)
+            ->delete();
+        return redirect('/main');
+
+    }
+
 
     // profileのページ
     public function profile()
@@ -238,5 +249,7 @@ class PostsController extends Controller
 
         return view('followed', ['list' => $list]);
     }
+
+
 
 }
