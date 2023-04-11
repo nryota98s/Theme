@@ -5,87 +5,88 @@
 
 <head>
 
-<meta charset='utf-8"'>
+  <meta charset='utf-8"'>
 
- <link rel='stylesheet' href="{{ asset('/css/app.css') }}">
+  <link rel='stylesheet' href="{{ asset('/css/app.css') }}">
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 
 
 <body>
 
-<header>
+  <header>
 
 
-</header>
-<div class="user_info">
+  </header>
+  <div class="user_info">
     <img class="icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
-  <li class="nav-item dropdown user_name">
-    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ Auth::user()->id }}/profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}
-    </a>
+    <li class="nav-item dropdown user_name">
+      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ Auth::user()->id }}/profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}
+      </a>
 
-    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">{{ __('Logout') }}
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
+          @csrf
         </form>
-    </div>
-</li>
-</div>
+      </div>
+    </li>
+  </div>
 
 
 
-<div class='container'>
+  <div class='container'>
 
 
-<p class="pull-right"><a class="btn btn-success" href="/create-form">投稿する</a></p>
-
-
-
-<table class='table table-hover tl'>
-
-<tr>
-
-<th>ユーザーネーム</th>
-
-<th>投稿内容</th>
-
-<th>投稿日時</th>
-
-</tr>
-
-@foreach ($list as $list)
-
-<tr>
-
-<td class="post_i">{{ $list->user_name }}</td>
-
-<td class="post_i">{{ $list->contents }}</td>
-
-<td class="post_i">{{ $list->created_at }}</td>
+    <p class="pull-right"><a class="btn btn-success" href="/create-form">投稿する</a></p>
 
 
 
 
-</tr>
+    <table class='table table-hover tl'>
 
-@endforeach
+      <tr>
 
-</table>
+        <th>ユーザーネーム</th>
 
-</div>
+        <th>投稿内容</th>
 
-<footer>
+        <th>投稿日時</th>
+
+      </tr>
+
+      @foreach ($list as $list)
+
+      <tr>
+
+        <td class="post_i">{{ $list->user_name }}</td>
+
+        <td class="post_i">{{ $list->contents }}</td>
+
+        <td class="post_i">{{ $list->created_at }}</td>
 
 
 
-</footer>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      </tr>
+
+      @endforeach
+
+    </table>
+
+  </div>
+
+  <footer>
+
+
+
+  </footer>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 </body>
 
