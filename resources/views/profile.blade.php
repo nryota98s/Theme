@@ -84,7 +84,7 @@
 
       <td class="post_b"><a class="btn btn-primary" href="/post/{{ $posts->id }}/update-form">更新</a></td>
 
-      <td><a class="btn btn-danger" href="/post/{{ $posts->id }}/delete" onclick="return confirm('[{{ $posts->contents }}]とゆう投稿を削除してもよろしいでしょうか？')">削除</a></td>
+      <td><a class="btn btn-danger" href="/post/{{ $posts->id }}/delete" onclick="return confirm('[{{ $posts->contents }}]という投稿を削除してもよろしいでしょうか？')">削除</a></td>
     </tr>
 
     @endforeach
