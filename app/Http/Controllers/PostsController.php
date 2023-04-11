@@ -251,5 +251,27 @@ class PostsController extends Controller
     }
 
 
+    // 検索結果
+    public function search(Request $request)
+    {
+        // 検索ボックスに入力された文字を取得しusersテーブルから該当するものを表示
+        $keyword = $request->input('keyword');
+        $items = DB::table('users')
+            ->where('name', 'like', '%' . $keyword . '%')
+            ->get();
+
+        // ログインユーザーがフォローしているユーザー情報抽出
+        $followed = DB::table('follows')
+            ->where('user_id', Auth::user()->id)
+            ->get();
+
+
+        return view('searchForm', ['keyword' => $keyword, 'items' => $items,]);
+    }
+
+
+
+
+
 
 }

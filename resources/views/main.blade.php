@@ -44,6 +44,13 @@
 
     <p class="pull-right"><a class="btn btn-success" href="/create-form">投稿する</a></p>
 
+    <div class="saerch">
+      {!! Form::open(['url'=>'/search-form']) !!}
+      {!! Form::text('keyword',null,['required','placeholder'=>'ユーザー検索','class'=>'search_box']) !!}
+      {!! Form::submit('検索',['class'=>'search_button']) !!}
+      {!! Form::close() !!}
+    </div>
+
 
 
 
