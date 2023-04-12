@@ -35,7 +35,12 @@ class PostsController extends Controller
             ->whereIn('user_name', $followers_name)
             ->get();
 
-        return view('main', ['list' => $list]);
+        $now_id = DB::table('users')
+            ->where('id', Auth::user()->id)
+            ->first(); // 最初の1つのレコードを取得
+
+
+        return view('main', ['list' => $list, 'now_id' => $now_id]);
 
     }
 
@@ -123,31 +128,39 @@ class PostsController extends Controller
 
 
     // profileのページ
-    public function profile()
+    public function profile($userid)
     {
-        // ログイン中のユーザーの投稿一覧
+        // http://127.0.0.1:8000/6/profile の6の部分に該当するidから抽出
+        $name = DB::table('users')
+            ->where('id', $userid)
+            ->first();
+
+        // 現在開いているページ主のユーザーの投稿一覧
         $posts = DB::table('posts')
-            ->where('user_name', Auth::user()->name)
+            ->where('user_name', $name->name)
             ->get();
-        // フォロー中の人数
+        // 現在開いているページ主のフォロー中の人数
         $followingCount = DB::table('follows')
-            ->where('user_id', Auth::user()->id)
+            ->where('user_id', $userid)
             ->count();
-        // フォロワーの人数
+        // 現在開いているページ主のフォロワーの人数
         $followerCount = DB::table('follows')
-            ->where('followed_user_id', Auth::user()->id)
+            ->where('followed_user_id', $userid)
             ->count();
-        // 投稿件数の取得
+        // 現在開いているページ主の投稿件数の取得
         $postcheck = DB::table('posts')
-            ->where('user_name', Auth::user()->name)
+            ->where('user_name', $name->name)
             ->count();
+
 
 
         return view('profile', [
             "posts" => $posts,
             'followingCount' => $followingCount,
             'followerCount' => $followerCount,
-            "postcheck" => $postcheck
+            "postcheck" => $postcheck,
+            "name" => $name
+
         ]);
 
     }
@@ -206,13 +219,13 @@ class PostsController extends Controller
         return redirect('/main');
     }
 
-    public function following()
+    public function following($userid)
     {
         $followers = DB::table('follows')
             //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
             ->join('users', 'follows.followed_user_id', '=', 'users.id')
-            // user_idが現在ログインしているユーザーのidと一致するもので抽出
-            ->where('follows.user_id', '=', Auth::user()->id)
+            // user_idが現在開いているページ主のidと一致するもので抽出
+            ->where('follows.user_id', '=', $userid)
             ->get();
 
         // $followersから、nameカラムの値を取り出して配列に格納する
@@ -229,13 +242,13 @@ class PostsController extends Controller
         return view('following', ['list' => $list]);
     }
 
-    public function followed()
+    public function followed($userid)
     {
         $followers = DB::table('follows')
             //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
             ->join('users', 'follows.user_id', '=', 'users.id')
-            // followed_user_idが現在ログインしているユーザーのidと一致するもので抽出
-            ->where('follows.followed_user_id', '=', Auth::user()->id)
+            // followed_user_idが現在開いているページ主のidと一致するもので抽出
+            ->where('follows.followed_user_id', '=', $userid)
             ->get();
 
         // $followersから、idカラムの値を取り出して配列に格納する
@@ -260,6 +273,7 @@ class PostsController extends Controller
             ->where('name', 'like', '%' . $keyword . '%')
             ->where('id', '<>', Auth::user()->id)
             ->get();
+
 
         // ログインユーザーがフォローしているユーザー情報抽出
         $followed = DB::table('follows')

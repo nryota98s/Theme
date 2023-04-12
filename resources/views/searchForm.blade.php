@@ -30,8 +30,8 @@
     @foreach ($items as $item)
 
     <tr>
-
-      <td><a href="f_name">{{ $item->name }}</a></td>
+{{-- プロフィールに飛ぶリンク --}}
+      <td><a href="{{ $item->id }}/profile">{{ $item->name }}</a></td>
 
       <td>
         @if(count(array_intersect([$item->id],$id)) > 0)
