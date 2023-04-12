@@ -35,12 +35,10 @@
 
       <td>
         {{-- 現在ログインしているユーザーでなければ表示 --}}
-        @if(Auth::check() && $item->id !== Auth::user()->id)
         @if(count(array_intersect([$item->id],$id)) > 0)
         <p class="followed">フォロー中</p>
         @else
         <p class="follow">フォローする</p>
-        @endif
         @endif
       </td>
 

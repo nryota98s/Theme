@@ -33,6 +33,7 @@ class PostsController extends Controller
             // user_nameがログイン中のアカウントがフォローしているアカウント名のものを抽出
             // whereInにすることで複数の値を指定することができる
             ->whereIn('user_name', $followers_name)
+            ->where('id', '<>', Auth::user()->id)
             // 日付で昇順にする
             ->orderBy('created_at', 'desc')
             ->get();
@@ -41,7 +42,9 @@ class PostsController extends Controller
             ->where('id', Auth::user()->id)
             ->first(); // 最初の1つのレコードを取得
 
-        $users = DB::table('users')->get();
+        $users = DB::table('users')
+            ->where('id', '<>', Auth::user()->id)
+            ->get();
 
         $followed = DB::table('follows')
             ->where('user_id', Auth::user()->id)
@@ -300,6 +303,7 @@ class PostsController extends Controller
         $keyword = $request->input('keyword');
         $items = DB::table('users')
             ->where('name', 'like', '%' . $keyword . '%')
+            ->where('id', '<>', Auth::user()->id)
             ->get();
 
 

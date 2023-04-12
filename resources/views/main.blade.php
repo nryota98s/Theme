@@ -99,13 +99,12 @@
 
 <p class="fing_i">{{ $users->name }}</p>
 <p class="fing_i">{{ $users->bio }}</p>
-@if(Auth::check() && $users->id !== Auth::user()->id)
 
    @if(count(array_intersect([$users->id],$id)) > 0)
         <p class="followed">フォロー中</p>
         @else
         <p class="follow">フォローする</p>
-        @endif
+
         @endif
 </div>
 
