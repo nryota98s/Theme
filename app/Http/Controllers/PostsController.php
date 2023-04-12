@@ -33,14 +33,25 @@ class PostsController extends Controller
             // user_nameがログイン中のアカウントがフォローしているアカウント名のものを抽出
             // whereInにすることで複数の値を指定することができる
             ->whereIn('user_name', $followers_name)
+            // 日付で昇順にする
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $now_id = DB::table('users')
             ->where('id', Auth::user()->id)
             ->first(); // 最初の1つのレコードを取得
 
+        $users = DB::table('users')->get();
 
-        return view('main', ['list' => $list, 'now_id' => $now_id]);
+        $followed = DB::table('follows')
+            ->where('user_id', Auth::user()->id)
+            ->get();
+
+        // $followedからfollowed_user_idを配列で抽出
+        $id = $followed->pluck('followed_user_id')->toArray();
+
+
+        return view('main', ['list' => $list, 'now_id' => $now_id, 'users' => $users, 'id' => $id]);
 
     }
 
@@ -138,6 +149,8 @@ class PostsController extends Controller
         // 現在開いているページ主のユーザーの投稿一覧
         $posts = DB::table('posts')
             ->where('user_name', $name->name)
+            // 日付で昇順にする
+            ->orderBy('created_at', 'desc')
             ->get();
         // 現在開いているページ主のフォロー中の人数
         $followingCount = DB::table('follows')
@@ -228,9 +241,16 @@ class PostsController extends Controller
             ->where('follows.user_id', '=', $userid)
             ->get();
 
-        // $followersから、nameカラムの値を取り出して配列に格納する
+        // $followersから、idカラムの値を取り出して配列に格納する
         $followers_id = $followers->pluck('id')->toArray();
+        // $followersから、nameカラムの値を取り出して配列に格納する
+        $followers_name = $followers->pluck('name')->toArray();
 
+        $post = DB::table('posts')
+            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
+            ->whereIn('user_name', $followers_name)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
 
         $list = DB::table('users')
@@ -239,7 +259,7 @@ class PostsController extends Controller
             ->get();
 
 
-        return view('following', ['list' => $list]);
+        return view('following', ['list' => $list, 'post' => $post]);
     }
 
     public function followed($userid)
@@ -253,6 +273,15 @@ class PostsController extends Controller
 
         // $followersから、idカラムの値を取り出して配列に格納する
         $followed_id = $followers->pluck('id')->toArray();
+        // $followersから、nameカラムの値を取り出して配列に格納する
+        $followed_name = $followers->pluck('name')->toArray();
+
+
+        $post = DB::table('posts')
+            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
+            ->whereIn('user_name', $followed_name)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $list = DB::table('users')
             // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
@@ -260,7 +289,7 @@ class PostsController extends Controller
             ->get();
 
 
-        return view('followed', ['list' => $list]);
+        return view('followed', ['list' => $list, 'post' => $post]);
     }
 
 
@@ -271,7 +300,6 @@ class PostsController extends Controller
         $keyword = $request->input('keyword');
         $items = DB::table('users')
             ->where('name', 'like', '%' . $keyword . '%')
-            ->where('id', '<>', Auth::user()->id)
             ->get();
 
 

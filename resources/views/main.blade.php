@@ -85,6 +85,35 @@
       @endforeach
 
     </table>
+    {{--現在サービスを利用しているユーザー一覧--}}
+    <div class="user_list">
+      <h2>現在サービスを利用しているユーザー一覧</h2>
+
+      @foreach ($users as $users)
+
+
+<div class="fing_info">
+
+  <img class="icon" src="{{ asset('storage/icon/'.$users->image) }}" alt="プロフィール画像">
+<div class="fing_nb">
+
+<p class="fing_i">{{ $users->name }}</p>
+<p class="fing_i">{{ $users->bio }}</p>
+@if(Auth::check() && $users->id !== Auth::user()->id)
+
+   @if(count(array_intersect([$users->id],$id)) > 0)
+        <p class="followed">フォロー中</p>
+        @else
+        <p class="follow">フォローする</p>
+        @endif
+        @endif
+</div>
+
+</div>
+
+@endforeach
+    </div>
+
 
   </div>
 
