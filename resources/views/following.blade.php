@@ -30,7 +30,7 @@
   <img class="icon" src="{{ asset('storage/icon/'.$list->image) }}" alt="プロフィール画像">
 <div class="fing_nb">
 
-  <p class="fing_i">{{ $list->name }}</p>
+<p class="fing_i">{{ $list->name }}</p>
 
 <p class="fing_i">{{ $list->bio }}</p>
 <p>フォロー中</p>
@@ -46,6 +46,9 @@
 
 @endforeach
 
+@if(empty($list))
+<p>フォローしているユーザーはいません</p>
+@endif
 
 
 

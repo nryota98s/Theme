@@ -45,7 +45,9 @@
 
 
 @endforeach
-
+@if(empty($list))
+<p>フォロワーはいません</p>
+@endif
 
 
 
