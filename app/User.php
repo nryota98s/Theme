@@ -16,7 +16,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -25,7 +27,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -36,4 +39,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    // ログインユーザーが他のユーザーをフォローする多対多の関係を定義(followsテーブルの'user_id'と'followed_user_id'を使用)
+    public function followAction()
+    {
+        return $this->belongsToMany(self::class, 'follows', 'user_id', 'followed_user_id');
+    }
+
 }

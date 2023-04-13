@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Storage; // Added namespace import
 
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Foundation\Auth\User;
+
 
 class PostsController extends Controller
 {
@@ -251,6 +253,7 @@ class PostsController extends Controller
     }
 
 
+
     // 検索結果
     public function search(Request $request)
     {
@@ -271,6 +274,25 @@ class PostsController extends Controller
 
         return view('searchForm', ['keyword' => $keyword, 'items' => $items, 'id' => $id]);
     }
+
+
+
+    // フォローする
+    public function follow($userId)
+    {
+        Auth::user()->followAction()->attach($userId);
+        return back();
+    }
+
+    // フォロー解除
+    public function unfollow($userId)
+    {
+        Auth::user()->followAction()->detach($userId);
+        return back();
+    }
+
+
+
 
 
 

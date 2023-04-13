@@ -46,7 +46,7 @@
 
     <div class="saerch">
       {!! Form::open(['url'=>'/search-form']) !!}
-      {!! Form::text('keyword',null,['required','placeholder'=>'ユーザー検索','class'=>'search_box']) !!}
+      {!! Form::text('keyword',null,['placeholder'=>'ユーザー検索','class'=>'search_box']) !!}
       {!! Form::submit('検索',['class'=>'search_button']) !!}
       {!! Form::close() !!}
     </div>
