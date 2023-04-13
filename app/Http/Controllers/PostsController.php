@@ -276,6 +276,12 @@ class PostsController extends Controller
     }
 
 
+    // ログインユーザーが他のユーザーをフォローする多対多の関係を定義(followsテーブルの'user_id'と'followed_user_id'を使用)
+    public function followAction()
+    {
+        return $this->belongsToMany(Post::class, 'follows', 'user_id', 'followed_user_id');
+    }
+
 
     // フォローする
     public function follow($userId)

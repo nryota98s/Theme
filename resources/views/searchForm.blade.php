@@ -23,7 +23,7 @@
 
     <tr>
 
-      <td><img class="icon" src="{{ asset('storage/icon/'.$items->image) }}" alt="プロフィール画像"></td>
+      <td><img class="icon" src="{{ asset('storage/icon/'.$item->image) }}" alt="プロフィール画像"></td>
 
       <td>
         <p>{{ $item->name }}</p>
