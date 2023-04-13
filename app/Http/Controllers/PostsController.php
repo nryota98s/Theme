@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Follow;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -12,57 +14,50 @@ use Illuminate\Support\Facades\Storage; // Added namespace import
 
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\Post;
+
+use App\Models\User;
+
 
 class PostsController extends Controller
 {
     // postsの一覧表示
     public function index()
     {
+        $PostModel = new Post(); // モデルのインスタンスを生成
+        $UserModel = new User(); // モデルのインスタンスを生成
+        $FollowModel = new Follow(); // モデルのインスタンスを生成
 
-        $followers = DB::table('follows')
-            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
-            ->join('users', 'follows.followed_user_id', '=', 'users.id')
-            // user_idが現在ログインしているユーザーのidと一致するもので抽出
-            ->where('follows.user_id', '=', Auth::user()->id)
-            ->get();
+        //フォロー中のユーザーの投稿表示
+        $list = $PostModel->getFollowersPosts();
 
-        // $followersから、nameカラムの値を取り出して配列に格納する
-        $followers_name = $followers->pluck('name')->toArray();
+        // 現在ログインしているアカウントを見つける
+        $userid = Auth::user()->id;
+        $now_id = $UserModel->get_UserId($userid);
 
-        $list = DB::table('posts')
-            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを抽出
-            // whereInにすることで複数の値を指定することができる
-            ->whereIn('user_name', $followers_name)
-            ->where('id', '<>', Auth::user()->id)
-            // 日付で昇順にする
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // userの一覧表示(ログイン中のユーザーを除く)
+        $users = $UserModel->getExcludedUsers();
 
-        $now_id = DB::table('users')
-            ->where('id', Auth::user()->id)
-            ->first(); // 最初の1つのレコードを取得
+        // フォロー中のユーザー取得
+        $id = $FollowModel->getFollowedUserIdsByUserId($userid);
 
-        $users = DB::table('users')
-            ->where('id', '<>', Auth::user()->id)
-            ->get();
-
-        $followed = DB::table('follows')
-            ->where('user_id', Auth::user()->id)
-            ->get();
-
-        // $followedからfollowed_user_idを配列で抽出
-        $id = $followed->pluck('followed_user_id')->toArray();
-
-
-        return view('main', ['list' => $list, 'now_id' => $now_id, 'users' => $users, 'id' => $id]);
+        return view(
+            'main',
+            [
+                'list' => $list,
+                'now_id' => $now_id,
+                'users' => $users,
+                'id' => $id
+            ]
+        );
 
     }
-
     // 投稿ページの表示
     public function createForm()
     {
         return view('createForm');
     }
+
     // 投稿の実施
     public function create(Request $request)
     {
@@ -79,12 +74,7 @@ class PostsController extends Controller
         $name = $request->input('name');
         $post = $request->input('newPost');
 
-
-        DB::table('posts')->insert([
-
-            'user_name' => $name,
-            'contents' => $post
-        ]);
+        Post::createPost($name, $post);
 
         return redirect('/main');
 
@@ -92,12 +82,7 @@ class PostsController extends Controller
     //  投稿の更新ページ
     public function updateForm($id)
     {
-
-        $post = DB::table('posts')
-
-            ->where('id', $id)
-
-            ->first();
+        $post = Post::updateView($id);
 
         return view('updateForm', ['post' => $post]);
 
@@ -112,31 +97,23 @@ class PostsController extends Controller
         ]);
 
         $id = $request->input('id');
-
         $up_post = $request->input('upPost');
 
-        DB::table('posts')
-
-            ->where('id', $id)
-
-            ->update(
-
-                ['contents' => $up_post]
-
-            );
-
-        return redirect('/main');
+        $result = Post::updatePost($id, $up_post);
+        if ($result) {
+            return redirect('/main');
+        }
 
     }
 
     // 投稿の削除
     public function delete($id)
     {
+        $result = Post::deletePost($id);
 
-        DB::table('posts')
-            ->where('id', $id)
-            ->delete();
-        return redirect('/main');
+        if ($result) {
+            return redirect('/main');
+        }
 
     }
 
@@ -144,31 +121,19 @@ class PostsController extends Controller
     // profileのページ
     public function profile($userid)
     {
-        // http://127.0.0.1:8000/6/profile の6の部分に該当するidから抽出
-        $name = DB::table('users')
-            ->where('id', $userid)
-            ->first();
+        // userを取得
+        $name = User::getUser($userid);
 
         // 現在開いているページ主のユーザーの投稿一覧
-        $posts = DB::table('posts')
-            ->where('user_name', $name->name)
-            // 日付で昇順にする
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $posts = Post::profileGetPost($userid);
+
         // 現在開いているページ主のフォロー中の人数
-        $followingCount = DB::table('follows')
-            ->where('user_id', $userid)
-            ->count();
+        $followingCount = Follow::followingCount($userid);
+
         // 現在開いているページ主のフォロワーの人数
-        $followerCount = DB::table('follows')
-            ->where('followed_user_id', $userid)
-            ->count();
+        $followerCount = Follow::followerCount($userid);
         // 現在開いているページ主の投稿件数の取得
-        $postcheck = DB::table('posts')
-            ->where('user_name', $name->name)
-            ->count();
-
-
+        $postcheck = Post::postCheck($userid);
 
         return view('profile', [
             "posts" => $posts,
@@ -182,18 +147,13 @@ class PostsController extends Controller
     }
 
     // profileの更新ページ
-    public function profileupdateForm()
+    public function profileupdateForm($userid)
     {
-
-        $post = DB::table('users')
-
-            ->where('id', Auth::user()->id)
-
-            ->first();
-
+        $post = User::getUserProfile($userid);
         return view('/prof-update', ['post' => $post]);
 
     }
+
 
     // profileの更新
 
@@ -203,36 +163,8 @@ class PostsController extends Controller
         $name = $request->input('upName');
         $bio = $request->input('upBio');
         $pass = $request->input('password');
-
-        // アイコン画像
-        if ($request->hasFile('image')) {
-            // imageの取得
-            $file = $request->file('image');
-
-            // filenameを固有のものにするために元々のfile名に時間を追加している
-            $filename = time() . '_' . $file->getClientOriginalName();
-            // publicディスクを使用して、('フォルダ名', ファイル, ファイル名)を指定して保存
-            Storage::disk('public')->putFileAs('icon', $file, $filename);
-        }
-        // imageがdefalut.png(初期状態)でない場合
-        else if (Auth::user()->image != 'default.png') {
-            $filename = Auth::user()->image;
-        } else {
-            //imageにファイル名がない場合、中身が空のためimageカラムの中身は変わらない
-            $filename = null;
-        }
-
-        // ハッシュ化されたパスワードとユーザーが入力したパスワードが一致しない場合
-        if (!Hash::check($pass, Auth::user()->password)) {
-            // エラーを"prof-update"に返す(エラーだった場合に直前のデータを残すために->back()を使用)
-            return redirect()->back()->with('error', 'パスワードが正しくありません');
-        }
-
-        DB::table('users')
-            ->where('id', $id)
-            ->update(['name' => $name, 'bio' => $bio, 'image' => $filename]);
-
-        return redirect('/main');
+        $file = $request->file('image');
+        return User::profile($id, $name, $bio, $pass, $request, $file);
     }
 
     public function following($userid)
@@ -264,6 +196,8 @@ class PostsController extends Controller
 
         return view('following', ['list' => $list, 'post' => $post]);
     }
+
+
 
     public function followed($userid)
     {
