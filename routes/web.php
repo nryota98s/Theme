@@ -46,4 +46,9 @@ Route::get('{userId}/profile/following', 'PostsController@following');
 // プロフィールのフォロワー一覧ページ
 Route::get('{userId}/profile/followed', 'PostsController@followed');
 // 検索結果表示
+Route::get('/search-form', 'PostsController@search');
 Route::post('/search-form', 'PostsController@search');
+// フォロー追加
+Route::get('/follow/{id}', 'PostsController@follow');
+// フォロー削除機能
+Route::get('/follow/{id}/delete', 'PostsController@unfollow');

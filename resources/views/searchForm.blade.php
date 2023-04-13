@@ -17,28 +17,24 @@
 
   <table class='table table-hover tl'>
 
-    <tr>
-
-      <th>ユーザーネーム</th>
-
-      <th></th>
-
-
-    </tr>
 
     @if(!$items->isEmpty())
     @foreach ($items as $item)
 
     <tr>
-{{-- プロフィールに飛ぶリンク --}}
-      <td><a href="{{ $item->id }}/profile">{{ $item->name }}</a></td>
+
+      <td><img class="icon" src="{{ asset('storage/icon/'.$items->image) }}" alt="プロフィール画像"></td>
 
       <td>
-        {{-- 現在ログインしているユーザーでなければ表示 --}}
+        <p>{{ $item->name }}</p>
+      </td>
+
+
+      <td>
         @if(count(array_intersect([$item->id],$id)) > 0)
-        <p class="followed">フォロー中</p>
+        <button class="fb followed"><a href="/follow/{{ $item->id }}/delete" onclick="return confirm('[{{ $item->name }}]のフォローを外しますか？')">フォロー中</a></button>
         @else
-        <p class="follow">フォローする</p>
+        <button class="fb follow"><a href="/follow/{{ $item->id }}">フォローする</a></button>
         @endif
       </td>
 
