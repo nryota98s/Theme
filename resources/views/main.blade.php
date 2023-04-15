@@ -16,14 +16,14 @@
 
 <body>
 
+
   <header>
-
-
+<a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
   </header>
   <div class="user_info">
     <img class="icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
     <li class="nav-item dropdown user_name">
-      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ Auth::user()->id }}/profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}
+      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ Auth::user()->id}}/profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}
       </a>
 
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -39,6 +39,7 @@
 
 
 
+
   <div class='container'>
 
 
@@ -50,6 +51,8 @@
       {!! Form::submit('検索',['class'=>'search_button']) !!}
       {!! Form::close() !!}
     </div>
+
+
 
 
     <table class='table table-hover tl'>
@@ -82,6 +85,34 @@
       @endforeach
 
     </table>
+    {{--現在サービスを利用しているユーザー一覧--}}
+    <div class="user_list">
+      <h2>現在サービスを利用しているユーザー一覧</h2>
+
+      @foreach ($users as $users)
+
+
+<div class="fing_info">
+
+  <img class="icon" src="{{ asset('storage/icon/'.$users->image) }}" alt="プロフィール画像">
+<div class="fing_nb">
+
+<p class="fing_i">{{ $users->name }}</p>
+<p class="fing_i">{{ $users->bio }}</p>
+
+   @if(count(array_intersect([$users->id],$id)) > 0)
+        <p class="followed">フォロー中</p>
+        @else
+        <p class="follow">フォローする</p>
+
+        @endif
+</div>
+
+</div>
+
+@endforeach
+    </div>
+
 
   </div>
 

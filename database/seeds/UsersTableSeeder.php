@@ -16,53 +16,52 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'MidnightEchoes',
                 'email' => 'qalazizelawye@eolom.com',
-                'password' => 'wjK9',
+                'password' => bcrypt('password'),
             ],
             [
                 'name' => 'SolarSpectrum',
                 'email' => 'tifevudoyuj@gokiw.com',
-                'password' => 'xRt3',
+                'password' => bcrypt('password'),
             ],
             [
                 'name' => 'CrystalCove',
                 'email' => 'qicimuyex@mayog.com',
-                'password' => 'sFq7
-',
+                'password' => bcrypt('password'),
             ],
             [
                 'name' => 'MysticMeadow',
                 'email' => 'cyzocizik@rolox.com',
-                'password' => 'tGv2',
+                'password' => bcrypt('password'),
             ],
             [
                 'name' => 'OceanicWhispers',
                 'email' => 'herynatokav@zotul.com',
-                'password' => 'pDk6',
+                'password' => bcrypt('password'),
             ],
             [
                 'name' => 'EnchantedWoods',
                 'email' => 'coqavazoh@kokix.com',
-                'password' => 'zHm4',
+                'password' => bcrypt('password'),
             ],
             [
                 'name' => 'CrimsonSoul',
                 'email' => 'mywyvevug@ziket.com',
-                'password' => 'yLc8',
+                'password' => bcrypt('password'),
             ],
             [
                 'name' => 'CelestialBloom',
                 'email' => 'jipehymafav@wazax.com',
-                'password' => 'bNf1',
+                'password' => bcrypt('password'),
             ],
             [
                 'name' => 'NebulaStorm',
                 'email' => 'xoyimivow@nukud.com',
-                'password' => 'mPj5',
+                'password' => bcrypt('password'),
             ],
             [
                 'name' => 'ThunderboltStrike',
                 'email' => 'gojokarix@gowum.com',
-                'password' => 'vTn0',
+                'password' => bcrypt('password'),
             ],
 
         ]);

@@ -19,6 +19,8 @@ a {
   object-fit: cover;
   border-radius: 200px;
   border: 2px solid black;
+  margin: 0 32px;
+
 }
 
 /* iconと名前が入っているもの */
@@ -55,6 +57,14 @@ a {
 .post_b {
   padding-left: 8px;
 
+}
+
+.user_list {
+  margin-top: 64px;
+}
+
+.logo {
+  width: 200px;
 }
 
 
@@ -137,7 +147,14 @@ a {
   display: flex;
   padding: 32px 0;
   justify-content: center;
+  border-bottom: 2px solid black;
+  margin: 0 415px;
 }
+
+.fing_nb {
+  flex-basis: 70%;
+}
+
 
 /* following.blade.php ここまで */
 
@@ -148,24 +165,19 @@ a {
   text-align: center;
 }
 
-
-/* フォロー中・フォローするボタン */
-.fb {
-  height: 30px;
-  width: 100px;
-  border-radius: 5px;
-  padding: 3px;
-}
-
+/* フォロー中・フォローする */
 .followed {
   background-color: dodgerblue;
   text-align: center;
-
+  padding: 3px;
+  border-radius: 5px;
 }
 
 .follow {
-  background-color: white;
   border: 1px solid black;
+  border-radius: 5px;
+  padding: 3px;
+  background-color: white;
 }
 
 /* search.blade.php　ここまで */

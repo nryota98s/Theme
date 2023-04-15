@@ -25,11 +25,7 @@ class Follows extends Migration
 
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 
-            // 外部キー制約
-            // usersのidが消えたらuser_idも消える
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // usersのidが消えたらfollowed_user_idも消える
-            $table->foreign('followed_user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

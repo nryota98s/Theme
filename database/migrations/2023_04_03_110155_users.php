@@ -27,6 +27,9 @@ class Users extends Migration
 
             $table->string('image')->default('default.png');
 
+            // 管理者権限を表すカラムを追加
+            $table->boolean('is_admin')->default(false);
+
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
