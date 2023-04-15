@@ -23,7 +23,7 @@
   <div class="user_info">
     <img class="icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
     <li class="nav-item dropdown user_name">
-      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ $now_id->id}}/profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}
+      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ Auth::user()->id}}/profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}
       </a>
 
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -47,7 +47,7 @@
 
     <div class="saerch">
       {!! Form::open(['url'=>'/search-form']) !!}
-      {!! Form::text('keyword',null,['required','placeholder'=>'ユーザー検索','class'=>'search_box']) !!}
+      {!! Form::text('keyword',null,['placeholder'=>'ユーザー検索','class'=>'search_box']) !!}
       {!! Form::submit('検索',['class'=>'search_button']) !!}
       {!! Form::close() !!}
     </div>

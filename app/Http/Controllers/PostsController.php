@@ -23,43 +23,24 @@ class PostsController extends Controller
 {
     public function index()
     {
+        // モデルのインポート
+        $postmodel = new Post;
+        $usermodel = new User;
+        $followmodel = new Follow;
+        $userid = Auth::user()->id;
 
-        $followers = DB::table('follows')
-            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
-            ->join('users', 'follows.followed_user_id', '=', 'users.id')
-            // user_idが現在ログインしているユーザーのidと一致するもので抽出
-            ->where('follows.user_id', '=', Auth::user()->id)
-            ->get();
+        // postsの一覧表示
+        $list = $postmodel->getFollowersPosts();
 
-        // $followersから、nameカラムの値を取り出して配列に格納する
-        $followers_name = $followers->pluck('name')->toArray();
+        // userの一覧表示(ログイン中のユーザーを除く)
+        $users = $usermodel->getExcludedUsers();
 
-        $list = DB::table('posts')
-            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを抽出
-            // whereInにすることで複数の値を指定することができる
-            ->whereIn('user_name', $followers_name)
-            ->where('id', '<>', Auth::user()->id)
-            // 日付で昇順にする
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $now_id = DB::table('users')
-            ->where('id', Auth::user()->id)
-            ->first(); // 最初の1つのレコードを取得
-
-        $users = DB::table('users')
-            ->where('id', '<>', Auth::user()->id)
-            ->get();
-
-        $followed = DB::table('follows')
-            ->where('user_id', Auth::user()->id)
-            ->get();
-
-        // $followedからfollowed_user_idを配列で抽出
-        $id = $followed->pluck('followed_user_id')->toArray();
+        // フォロー中のユーザーのid取得
+        $id = $followmodel->getFollowedUserIdsByUserId($userid);
 
 
-        return view('main', ['list' => $list, 'now_id' => $now_id, 'users' => $users, 'id' => $id]);
+
+        return view('main', ['list' => $list, 'users' => $users, 'id' => $id]);
 
     }
 
@@ -178,31 +159,15 @@ class PostsController extends Controller
         return User::profile($id, $name, $bio, $pass, $request, $file);
     }
 
+
     public function following($userid)
     {
-        $followers = DB::table('follows')
-            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
-            ->join('users', 'follows.followed_user_id', '=', 'users.id')
-            // user_idが現在開いているページ主のidと一致するもので抽出
-            ->where('follows.user_id', '=', $userid)
-            ->get();
 
-        // $followersから、idカラムの値を取り出して配列に格納する
-        $followers_id = $followers->pluck('id')->toArray();
-        // $followersから、nameカラムの値を取り出して配列に格納する
-        $followers_name = $followers->pluck('name')->toArray();
+        // postsの一覧表示
+        $post = Post::getFollowersPosts();
 
-        $post = DB::table('posts')
-            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
-            ->whereIn('user_name', $followers_name)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-
-        $list = DB::table('users')
-            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
-            ->whereIn('id', $followers_id)
-            ->get();
+        // フォロー中のユーザー表示
+        $list = User::getFollowingUser();
 
 
         return view('following', ['list' => $list, 'post' => $post]);
@@ -212,29 +177,10 @@ class PostsController extends Controller
 
     public function followed($userid)
     {
-        $followers = DB::table('follows')
-            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
-            ->join('users', 'follows.user_id', '=', 'users.id')
-            // followed_user_idが現在開いているページ主のidと一致するもので抽出
-            ->where('follows.followed_user_id', '=', $userid)
-            ->get();
-
-        // $followersから、idカラムの値を取り出して配列に格納する
-        $followed_id = $followers->pluck('id')->toArray();
-        // $followersから、nameカラムの値を取り出して配列に格納する
-        $followed_name = $followers->pluck('name')->toArray();
-
-
-        $post = DB::table('posts')
-            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
-            ->whereIn('user_name', $followed_name)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $list = DB::table('users')
-            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
-            ->whereIn('id', $followed_id)
-            ->get();
+        // postsの一覧表示
+        $post = Post::getFollowedPosts();
+        // フォロワー表示
+        $list = User::getFollowedUser();
 
 
         return view('followed', ['list' => $list, 'post' => $post]);
@@ -251,14 +197,10 @@ class PostsController extends Controller
             ->where('id', '<>', Auth::user()->id)
             ->get();
 
-
-        // ログインユーザーがフォローしているユーザー情報抽出
-        $followed = DB::table('follows')
-            ->where('user_id', Auth::user()->id)
-            ->get();
+        $userid = Auth::user()->id;
 
         // $followedからfollowed_user_idを配列で抽出
-        $id = $followed->pluck('followed_user_id')->toArray();
+        $id = Follow::getFollowedUserIdsByUserId($userid);
 
         return view('searchForm', ['keyword' => $keyword, 'items' => $items, 'id' => $id]);
     }

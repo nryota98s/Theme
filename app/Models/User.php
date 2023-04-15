@@ -20,14 +20,16 @@ class User extends Model
     protected $fillable = [
         'user_name',
         'contents',
+        'is_admin'
     ];
     protected $table = 'users';
-
-    // 現在ログインしているアカウントを見つける
-    public static function get_UserId($userid)
+    // isAdmin付与
+    public function isAdmin()
     {
-        return static::where('id', $userid)->first();
+        return $this->is_admin;
     }
+
+
 
     // userの一覧表示(ログイン中のユーザーを除く)
     public function getExcludedUsers()
@@ -119,5 +121,42 @@ class User extends Model
     {
         return $this->belongsToMany(self::class, 'follows', 'user_id', 'followed_user_id');
     }
+
+    // フォロー中のユーザー表示
+    public static function getFollowingUser()
+    {
+
+        $userid = Auth::user()->id;
+        $followers_id = Follow::getFollowedUserIdsByUserId($userid);
+        $list = DB::table('users')
+            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
+            ->whereIn('id', $followers_id)
+            ->get();
+        return $list;
+    }
+
+    public static function getFollowedUser()
+    {
+        $userid = Auth::user()->id;
+        $followers = DB::table('follows')
+            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
+            ->join('users', 'follows.user_id', '=', 'users.id')
+            // followed_user_idが現在開いているページ主のidと一致するもので抽出
+            ->where('follows.followed_user_id', '=', $userid)
+            ->get();
+
+        // $followersから、idカラムの値を取り出して配列に格納する
+        $followed_id = $followers->pluck('id')->toArray();
+
+        $list = DB::table('users')
+            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
+            ->whereIn('id', $followed_id)
+            ->get();
+
+
+        return $list;
+
+    }
+
 
 }

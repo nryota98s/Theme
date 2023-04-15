@@ -27,7 +27,7 @@ class Post extends Model
     ];
 
     // postsの一覧表示
-    public function getFollowersPosts()
+    public static function getFollowersPosts()
     {
         //フォロー中のユーザーの投稿表示　ここから
 
@@ -121,7 +121,27 @@ class Post extends Model
         return $postcheck;
     }
 
+    public static function getFollowedPosts()
+    {
+        $userid = Auth::user()->id;
+
+        $followers = DB::table('follows')
+            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
+            ->join('users', 'follows.user_id', '=', 'users.id')
+            // followed_user_idが現在開いているページ主のidと一致するもので抽出
+            ->where('follows.followed_user_id', '=', $userid)
+            ->get();
+        // $followersから、nameカラムの値を取り出して配列に格納する
+        $followed_name = $followers->pluck('name')->toArray();
 
 
+        $post = DB::table('posts')
+            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
+            ->whereIn('user_name', $followed_name)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return $post;
+    }
 
 }
