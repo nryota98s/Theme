@@ -29,7 +29,6 @@ class Post extends Model
     // postsの一覧表示
     public static function getFollowersPosts()
     {
-        //フォロー中のユーザーの投稿表示　ここから
 
         // フォロー中のユーザーの名前を取得
         $followersNames = Follow::join('users', 'follows.followed_user_id', '=', 'users.id')

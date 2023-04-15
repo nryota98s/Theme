@@ -13,7 +13,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
-
+<header>
+  <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
+</header>
 
 <body>
 
@@ -68,7 +70,7 @@
     <p class="pull-right p_btn"><a class="btn btn-success" href="/create-form">投稿する</a></p>
     @endif
 @endif
-    <a class="top_btn" href="/main">mainへ戻る</a>
+
 
     <tr>
 

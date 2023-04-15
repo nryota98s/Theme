@@ -16,9 +16,9 @@
 
 <body>
 
+
   <header>
-
-
+<a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
   </header>
   <div class="user_info">
     <img class="icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">

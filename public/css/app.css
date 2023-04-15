@@ -63,6 +63,11 @@ a {
   margin-top: 64px;
 }
 
+.logo {
+  width: 200px;
+}
+
+
 /* main.blade.phpここまで */
 
 /* create.blade.phpここから */

@@ -19,7 +19,7 @@
 
 
 <header>
-
+<a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
 
 
 </header>

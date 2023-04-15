@@ -114,7 +114,7 @@ class PostsController extends Controller
     public function profile($userid)
     {
         // userを取得
-        $name = User::getUser($userid);
+        $name = User::getUserProfile($userid);
 
         // 現在開いているページ主のユーザーの投稿一覧
         $posts = Post::profileGetPost($userid);

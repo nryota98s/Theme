@@ -9,9 +9,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
+<header>
+  <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
+</header>
 <body>
 
-  <p><a href="/main">← mainへ</a></p>
+
 
   <h1 class="s_results">"{{ $keyword }}"の検索結果</h1>
 
