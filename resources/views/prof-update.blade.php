@@ -20,20 +20,23 @@
 <body>
 
 
-<header>
 
-
-
-</header>
 
 <div class='container'>
+  {{-- 権限がないページに入ろうとした場合 --}}
+@if (session('USer_error'))
 
+<h2 class="page-header">{{ session('USer_error') }}</h2>
+
+
+@endif
 <h2 class='page-header'>ユーザー情報を変更する</h2>
+<a href="{{ url($post->id . '/pass-update') }}">パスワードの更新はこちらから</a>
 {{-- パスワードのエラーがあった際にエラーを表示 --}}
 @if (session('error'))
 
+<p>{{ session('error') }}</p>
 
-{{ session('error') }}
 
 @endif
 {{--'enctype':ファイルを含むフォームデータをサーバーに送信するために使用されるもの。 --}}

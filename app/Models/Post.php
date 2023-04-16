@@ -4,15 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Auth;
-
-use Illuminate\Support\Facades\Storage; // Added namespace import
-
-use Illuminate\Support\Facades\Hash;
 
 use App\Follow;
 
@@ -122,7 +116,7 @@ class Post extends Model
 
     public static function getFollowedPosts()
     {
-        $userid = Auth::user()->id;
+        $userid = User::User();
 
         $followers = DB::table('follows')
             //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる

@@ -4,15 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
-
-use Illuminate\Support\Facades\Auth;
-
-use Illuminate\Support\Facades\Storage; // Added namespace import
-
-use Illuminate\Support\Facades\Hash;
 
 class Follow extends Model
 {
@@ -23,7 +15,21 @@ class Follow extends Model
     ];
     protected $table = 'follows';
 
-    // フォロー中のユーザーのid取得
+
+    // フォロー中のユーザーのid取得(フォロワーのページで使用)
+    public static function getFollowingUserIdsByUserId($userid)
+    {
+        $followers = DB::table('follows')
+            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
+            ->join('users', 'follows.user_id', '=', 'users.id')
+            // followed_user_idが現在開いているページ主のidと一致するもので抽出
+            ->where('follows.followed_user_id', '=', $userid)
+            ->get();
+        $followed_id = $followers->pluck('id')->toArray();
+        return $followed_id;
+    }
+
+    // フォロワーのユーザーのid取得
     public static function getFollowedUserIdsByUserId($userid)
     {
         $id = self::where('user_id', $userid)
