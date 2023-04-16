@@ -35,6 +35,13 @@
         {{ session('error') }}
     </div>
 @endif
+
+@if (session('USer_error'))
+
+<h2 class="page-header">{{ session('USer_error') }}</h2>
+
+
+@endif
 {{-- 処理が成功した際に表示 --}}
 
 @if (session('success'))
