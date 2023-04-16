@@ -4,10 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Storage; // Added namespace import
@@ -29,6 +25,11 @@ class User extends Model
         return $this->is_admin;
     }
 
+    public static function User()
+    {
+        $userid = Auth::user()->id;
+        return $userid;
+    }
 
 
     // userの一覧表示(ログイン中のユーザーを除く)
@@ -50,8 +51,7 @@ class User extends Model
     // userを取得
     public static function getUser($userid)
     {
-        $name = DB::table('users')
-            ->where('id', $userid)
+        $name = self::where('id', $userid)
             ->first();
         return $name;
     }
@@ -79,83 +79,66 @@ class User extends Model
         // ハッシュ化されたパスワードとユーザーが入力したパスワードが一致しない場合
         if (!Hash::check($pass, Auth::user()->password)) {
             // エラーを"prof-update"に返す(エラーだった場合に直前のデータを残すために->back()を使用)
-            return redirect()->back()->with('error', 'パスワードが正しくありません');
+            return redirect()->back()->with('error', '入力されたパスワードが正しくありません');
         }
-
-        DB::table('users')
-            ->where('id', $id)
-            ->update(['name' => $name, 'bio' => $bio, 'image' => $filename]);
+        self::where('id', $id)->update
+        ([
+                'name' => $name,
+                'bio' => $bio,
+                'image' => $filename
+            ]);
 
         return redirect('/main');
-    }
-
-    public function followingUser($userid)
-    {
-        $followers = DB::table('follows')
-            // usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
-            ->join('users', 'follows.followed_user_id', '=', 'users.id')
-            // user_idが現在開いているページ主のidと一致するもので抽出
-            ->where('follows.user_id', '=', $userid)
-            ->get();
-
-        // $followersから、idカラムの値を取り出して配列に格納する
-        $followers_id = $followers->pluck('id')->toArray();
-        // $followersから、nameカラムの値を取り出して配列に格納する
-        $followers_name = $followers->pluck('name')->toArray();
-
-        $post = DB::table('posts')
-            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
-            ->whereIn('user_name', $followers_name)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $list = DB::table('users')
-            // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
-            ->whereIn('id', $followers_id)
-            ->get();
-
-        return view('following', ['list' => $list, 'post' => $post]);
-    }
-    // ログインユーザーが他のユーザーをフォローする多対多の関係を定義(followsテーブルの'user_id'と'followed_user_id'を使用)
-    public function followAction()
-    {
-        return $this->belongsToMany(self::class, 'follows', 'user_id', 'followed_user_id');
     }
 
     // フォロー中のユーザー表示
     public static function getFollowingUser()
     {
 
-        $userid = Auth::user()->id;
+        $userid = User::User();
         $followers_id = Follow::getFollowedUserIdsByUserId($userid);
-        $list = DB::table('users')
+        $list = self::whereIn('id', $followers_id)
             // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
-            ->whereIn('id', $followers_id)
             ->get();
         return $list;
     }
 
     public static function getFollowedUser()
     {
-        $userid = Auth::user()->id;
-        $followers = DB::table('follows')
-            //usersテーブルとfollowsテーブルをfollowed_user_idとusers.idの部分で内部結合させる
-            ->join('users', 'follows.user_id', '=', 'users.id')
-            // followed_user_idが現在開いているページ主のidと一致するもので抽出
-            ->where('follows.followed_user_id', '=', $userid)
-            ->get();
+        $userid = User::User();
+
 
         // $followersから、idカラムの値を取り出して配列に格納する
-        $followed_id = $followers->pluck('id')->toArray();
+        $followed_id = Follow::getFollowingUserIdsByUserId($userid);
 
-        $list = DB::table('users')
+        $list = self::whereIn('id', $followed_id)
             // user_nameがログイン中のアカウントがフォローしているアカウント名のものを複数抽出
-            ->whereIn('id', $followed_id)
             ->get();
-
 
         return $list;
 
+    }
+
+    // 検索結果
+    public static function searchKey($keyword)
+    {
+        $items = self::where('name', 'like', '%' . $keyword . '%')
+            ->where('id', '<>', Auth::user()->id)
+            ->get();
+
+        return $items;
+    }
+
+    // パスワードの変更
+    public function passwordUpdate($pass, $newpass, $id)
+    {
+        if (!Hash::check($pass, Auth::user()->password)) {
+            // エラーを"pass-update"に返す(エラーだった場合に直前のデータを残すために->back()を使用)
+            return redirect()->back()->with('error', 'パスワードが正しくありません');
+        }
+        self::where('id', $id)
+            ->update(['password' => bcrypt($newpass)]);
+        return redirect()->back()->with('success', 'パスワードを更新しました');
     }
 
 

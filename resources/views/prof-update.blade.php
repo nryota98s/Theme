@@ -32,8 +32,8 @@
 {{-- パスワードのエラーがあった際にエラーを表示 --}}
 @if (session('error'))
 
+<p>{{ session('error') }}</p>
 
-{{ session('error') }}
 
 @endif
 {{--'enctype':ファイルを含むフォームデータをサーバーに送信するために使用されるもの。 --}}

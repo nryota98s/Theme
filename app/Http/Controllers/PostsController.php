@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Follow;
+
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Auth;
-
-use Illuminate\Support\Facades\Storage; // Added namespace import
-
-use Illuminate\Support\Facades\Hash;
 
 use App\Models\Post;
 
 use App\Models\User;
 
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
@@ -27,7 +25,7 @@ class PostsController extends Controller
         $postmodel = new Post;
         $usermodel = new User;
         $followmodel = new Follow;
-        $userid = Auth::user()->id;
+        $userid = User::User();
 
         // postsの一覧表示
         $list = $postmodel->getFollowersPosts();
@@ -192,12 +190,8 @@ class PostsController extends Controller
     {
         // 検索ボックスに入力された文字を取得しusersテーブルから該当するものを表示
         $keyword = $request->input('keyword');
-        $items = DB::table('users')
-            ->where('name', 'like', '%' . $keyword . '%')
-            ->where('id', '<>', Auth::user()->id)
-            ->get();
-
-        $userid = Auth::user()->id;
+        $items = User::searchKey($keyword);
+        $userid = User::User();
 
         // $followedからfollowed_user_idを配列で抽出
         $id = Follow::getFollowedUserIdsByUserId($userid);
@@ -222,6 +216,30 @@ class PostsController extends Controller
         return back();
     }
 
+    // パスワード更新のページ
+    public function passupdateForm($userid)
+    {
+        $post = User::getUserProfile($userid);
+        return view('/pass-update', ['post' => $post]);
+
+    }
+
+    public function passUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+            ],
+        ]);
+        $pass = $request->input('password');
+        $newpass = $request->input('new_password');
+        $id = $request->input('id');
+        $usermodel = new User;
+        return $usermodel->passwordUpdate($pass, $newpass, $id);
+    }
 
 
 

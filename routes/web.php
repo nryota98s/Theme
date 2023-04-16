@@ -47,8 +47,13 @@ Route::get('{userId}/profile/following', 'PostsController@following');
 Route::get('{userId}/profile/followed', 'PostsController@followed');
 // 検索結果表示
 Route::get('/search-form', 'PostsController@search');
-Route::post('/search-form', 'PostsController@search');
 // フォロー追加
 Route::get('/follow/{id}', 'PostsController@follow');
 // フォロー削除機能
 Route::get('/follow/{id}/delete', 'PostsController@unfollow');
+// passの編集のページ
+Route::get('{userId}/pass-update', 'PostsController@passupdateForm')->middleware('auth');
+;
+// passの編集
+Route::post('/pass/update', 'PostsController@passUpdate')->middleware('auth');
+;
