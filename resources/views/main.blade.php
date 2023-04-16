@@ -113,7 +113,7 @@
 @endforeach
     </div>
 
-    <p>テスト</p>
+
 
   </div>
 

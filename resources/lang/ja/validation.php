@@ -122,8 +122,8 @@ return [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
         'name' => 'ユーザー名',
-        'userName' => 'ユーザー名'
-
+        'userName' => 'ユーザー名',
+        'new_password' => '新しいパスワード'
     ],
 
 ];
