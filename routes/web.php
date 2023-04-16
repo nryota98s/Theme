@@ -52,3 +52,5 @@ Route::post('/search-form', 'PostsController@search');
 Route::get('/follow/{id}', 'PostsController@follow');
 // フォロー削除機能
 Route::get('/follow/{id}/delete', 'PostsController@unfollow');
+// 管理者
+Route::get('/admin', 'AdminController@index')->middleware('admin');

@@ -29,15 +29,15 @@
       <td><img class="icon" src="{{ asset('storage/icon/'.$item->image) }}" alt="プロフィール画像"></td>
 
       <td>
-        <p>{{ $item->name }}</p>
+        <p><a href="{{ $item->id}}/profile">{{ $item->name }}</a></p>
       </td>
 
 
       <td>
         @if(count(array_intersect([$item->id],$id)) > 0)
-        <button class="fb followed"><a href="/follow/{{ $item->id }}/delete" onclick="return confirm('[{{ $item->name }}]のフォローを外しますか？')">フォロー中</a></button>
+        <p class="fb followed"><a href="/follow/{{ $item->id }}/delete" onclick="return confirm('[{{ $item->name }}]のフォローを外しますか？')">フォロー中</a></p>
         @else
-        <button class="fb follow"><a href="/follow/{{ $item->id }}">フォローする</a></button>
+        <p class="fb follow"><a href="/follow/{{ $item->id }}">フォローする</a></p>
         @endif
       </td>
 

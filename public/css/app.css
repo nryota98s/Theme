@@ -165,7 +165,7 @@ a {
   text-align: center;
 }
 
-/* フォロー中・フォローする */
+/* フォロー中 */
 .followed {
   background-color: dodgerblue;
   text-align: center;
@@ -173,6 +173,7 @@ a {
   border-radius: 5px;
 }
 
+/* フォローする */
 .follow {
   border: 1px solid black;
   border-radius: 5px;

@@ -18,7 +18,7 @@
 
 
   <header>
-<a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
+    <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
   </header>
   <div class="user_info">
     <img class="icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
@@ -92,25 +92,25 @@
       @foreach ($users as $users)
 
 
-<div class="fing_info">
+      <div class="fing_info">
 
-  <img class="icon" src="{{ asset('storage/icon/'.$users->image) }}" alt="プロフィール画像">
-<div class="fing_nb">
+        <img class="icon" src="{{ asset('storage/icon/'.$users->image) }}" alt="プロフィール画像">
+        <div class="fing_nb">
 
-<p class="fing_i">{{ $users->name }}</p>
-<p class="fing_i">{{ $users->bio }}</p>
+          <p class="fing_i"><a href="{{ $users->id}}/profile">{{ $users->name }}</a></p>
+          <p class="fing_i">{{ $users->bio }}</p>
 
-   @if(count(array_intersect([$users->id],$id)) > 0)
-        <p class="followed">フォロー中</p>
-        @else
-        <p class="follow">フォローする</p>
+          @if(count(array_intersect([$users->id],$id)) > 0)
+          <p class="fb followed"><a href="/follow/{{ $users->id }}/delete" onclick="return confirm('[{{ $users->name }}]のフォローを外しますか？')">フォロー中</a></p>
+          @else
+          <p class="fb follow"><a href="/follow/{{ $users->id }}">フォローする</a></p>
 
-        @endif
-</div>
+          @endif
+        </div>
 
-</div>
+      </div>
 
-@endforeach
+      @endforeach
     </div>
 
     <p>テスト</p>
