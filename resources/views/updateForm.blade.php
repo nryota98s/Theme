@@ -36,7 +36,7 @@
   </div>
 
 {!! Form::open(['url' => '/post/update']) !!}
-
+@csrf
 <div class="form-group">
 
 {!! Form::hidden('id', $post->id) !!}

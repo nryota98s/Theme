@@ -66,4 +66,20 @@ class Kernel extends HttpKernel
         // userid　が一致しないページに行かせない
         'userid' => \App\Http\Middleware\UserIdMiddleware::class,
     ];
+
+    protected function schedule(Schedule $schedule)
+    {
+        // ログの保管期間を1年にする
+        $schedule->call(function () {
+            $logPath = storage_path('logs');
+            $logs = Storage::files('logs');
+
+            $oneYearAgo = now()->subYear();
+            foreach ($logs as $log) {
+                if (Storage::lastModified($log) < $oneYearAgo->getTimestamp()) {
+                    Storage::delete($log);
+                }
+            }
+        })->daily();
+    }
 }

@@ -54,7 +54,7 @@
 <p>ユーザー名</p>
 <p>{{ $post->name}}</p>
 {!! Form::open(['url' => '/pass/update']) !!}
-
+@csrf
 <div class="form-group">
 
 {!! Form::hidden('id', $post->id) !!}

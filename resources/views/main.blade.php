@@ -47,6 +47,7 @@
 
     <div class="saerch">
       {!! Form::open(['url'=>'/search-form']) !!}
+      @csrf
       {!! Form::text('keyword',null,['placeholder'=>'ユーザー検索','class'=>'search_box']) !!}
       {!! Form::submit('検索',['class'=>'search_button']) !!}
       {!! Form::close() !!}

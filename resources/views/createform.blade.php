@@ -37,7 +37,7 @@
   </div>
 
 {!! Form::open(['url' => 'post/create']) !!}
-
+ @csrf
 <div class="form-group">
 
 {!! Form::input('text', 'name',Auth::user()->name, ['required', 'class' => ['form-control','form_n'], 'placeholder' => 'ユーザーネーム']) !!}

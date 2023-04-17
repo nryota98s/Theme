@@ -162,7 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-
+            // ログの管理
+        Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
             /*
              * Package Service Providers...
              */
@@ -229,7 +230,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-
+        // ログの管理
+        'MediaLibrary' => Spatie\MediaLibrary\MediaLibraryFacade::class,
 
     ],
 

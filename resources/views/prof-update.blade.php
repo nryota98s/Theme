@@ -41,7 +41,7 @@
 @endif
 {{--'enctype':ファイルを含むフォームデータをサーバーに送信するために使用されるもの。 --}}
 {!! Form::open(['url' => '/profile/update', 'enctype' => 'multipart/form-data']) !!}
-
+@csrf
 <div class="form-group">
 
 {!! Form::hidden('id', $post->id) !!}

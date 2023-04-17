@@ -32,6 +32,10 @@ return [
     */
 
     'lifetime' => env('SESSION_LIFETIME', 120),
+    'secure' => true,
+    // HTTPS 接続時のみセッションを有効にする
+    'http_only' => true,
+    // JavaScript からのアクセスを制限する
 
     'expire_on_close' => false,
 
@@ -128,7 +132,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+        Str::slug(env('APP_NAME', 'laravel'), '_') . '_session'
     ),
 
     /*
