@@ -17,6 +17,7 @@
 <header>
   <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
 
+  @if(Auth::user()->isAdmin())
   <h3>＜＜管理者＞＞</h3>
 
 </header>
@@ -36,7 +37,7 @@
         <ul>
           <li><a href="/admin">投稿一覧</a></li>
           <li><a href="/grant-admin">管理者権限</a></li>
-          <li><a href="/pass-admin">パスワード管理</a></li>
+          <li><a href="pass-admin">パスワード管理</a></li>
         </ul>
       </div>
 
@@ -47,20 +48,13 @@
 
     <div class='admin_container'>
 
-      <h1>投稿一覧</h1>
+      <h1>管理者権限管理</h1>
 
-      <table class='admin-table'>
 
+      <table class='table table-hover tl'>
         <tr>
 
           <th>ユーザーネーム</th>
-
-          <th>投稿内容</th>
-
-          <th>投稿日時</th>
-
-          <th></th>
-
           <th></th>
 
         </tr>
@@ -69,14 +63,14 @@
 
         <tr>
 
-          <td class="post_i">{{ $list->user_name }}</td>
+          <td class="post_i">{{ $list->name }}</td>
 
-          <td class="post_i">{{ $list->contents }}</td>
-
-          <td class="post_i">{{ $list->created_at }}</td>
-
-          <td><a class="btn btn-danger" href="/admin/{{ $list->id }}/delete" onclick="return confirm('[{{ $list->contents }}]という投稿を削除してもよろしいでしょうか？')">削除</a></td>
-
+          <td>
+            <select name="" id="">
+              <option value="">権限なし</option>
+              <option value="">権限あり</option>
+            </select>
+          </td>
 
         </tr>
 
@@ -86,17 +80,18 @@
 
     </div>
 
-  </div>
+    @else
+    <h3>＜＜管理者権限がありません＞＞</h3>
+    @endif
+
+
+    <footer>
 
 
 
-  <footer>
+    </footer>
 
-
-
-  </footer>
-
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 </body>
 

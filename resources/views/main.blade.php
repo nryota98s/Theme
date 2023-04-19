@@ -21,7 +21,14 @@
     <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
 
     <h3>＜＜社員用＞＞</h3>
+    {{-- 権限がないページに入ろうとした場合 --}}
     <p><a href="/admin">管理者ページ</a></p>
+
+    @if (session('USer_error'))
+    <script>
+      alert('{{ session('USer_error') }}');
+    </script>
+    @endif
 
 
   </header>
@@ -51,11 +58,11 @@
     <p class="pull-right"><a class="btn btn-success" href="/create-form">投稿する</a></p>
 
     <div class="saerch">
-      {!! Form::open(['url'=>'/search-form']) !!}
-      @csrf
-      {!! Form::text('keyword',null,['placeholder'=>'ユーザー検索','class'=>'search_box']) !!}
-      {!! Form::submit('検索',['class'=>'search_button']) !!}
-      {!! Form::close() !!}
+      <form action='/search-form'>
+        @csrf
+        <input class="search_box" type="text" name="keyword" placeholder="ユーザー検索">
+        <button class="search_button" type="submit">検索</button>
+      </form>
     </div>
 
 
@@ -82,8 +89,6 @@
         <td class="post_i">{{ $list->contents }}</td>
 
         <td class="post_i">{{ $list->created_at }}</td>
-
-
 
 
       </tr>
