@@ -36,16 +36,8 @@
       <div>
         <ul>
           <li><a href="/admin">投稿一覧</a></li>
-          <li><a href="">管理者権限</a></li>
-          <li><a href="">パスワード管理</a></li>
-          <li>
-            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">{{ __('Logout') }}
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST">
-              @csrf
-            </form>
-          </li>
+          <li><a href="/grant-admin">管理者権限</a></li>
+          <li><a href="pass-admin">パスワード管理</a></li>
         </ul>
       </div>
 
@@ -58,6 +50,33 @@
 
       <h1>管理者権限管理</h1>
 
+
+      <table class='table table-hover tl'>
+        <tr>
+
+          <th>ユーザーネーム</th>
+          <th></th>
+
+        </tr>
+
+        @foreach ($list as $list)
+
+        <tr>
+
+          <td class="post_i">{{ $list->name }}</td>
+
+          <td>
+            <select name="" id="">
+              <option value="">権限なし</option>
+              <option value="">権限あり</option>
+            </select>
+          </td>
+
+        </tr>
+
+        @endforeach
+
+      </table>
 
     </div>
 

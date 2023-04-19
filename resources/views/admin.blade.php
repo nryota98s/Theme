@@ -17,7 +17,6 @@
 <header>
   <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
 
-  @if(Auth::user()->isAdmin())
   <h3>＜＜管理者＞＞</h3>
 
 </header>
@@ -36,16 +35,8 @@
       <div>
         <ul>
           <li><a href="/admin">投稿一覧</a></li>
-          <li><a href="">管理者権限</a></li>
-          <li><a href="">パスワード管理</a></li>
-          <li>
-            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">{{ __('Logout') }}
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST">
-              @csrf
-            </form>
-          </li>
+          <li><a href="/grant-admin">管理者権限</a></li>
+          <li><a href="/pass-admin">パスワード管理</a></li>
         </ul>
       </div>
 
@@ -97,9 +88,6 @@
 
   </div>
 
-  @else
-  <h3>＜＜管理者権限がありません＞＞</h3>
-  @endif
 
 
   <footer>
