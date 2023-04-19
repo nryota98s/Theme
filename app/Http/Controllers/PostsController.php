@@ -36,8 +36,6 @@ class PostsController extends Controller
         // フォロー中のユーザーのid取得
         $id = $followmodel->getFollowedUserIdsByUserId($userid);
 
-
-
         return view('main', ['list' => $list, 'users' => $users, 'id' => $id]);
 
     }

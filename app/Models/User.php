@@ -19,17 +19,14 @@ class User extends Model
         'is_admin'
     ];
     protected $table = 'users';
-    // isAdmin付与
-    public function isAdmin()
-    {
-        return $this->is_admin;
-    }
+
 
     public static function User()
     {
         $userid = Auth::user()->id;
         return $userid;
     }
+
 
 
     // userの一覧表示(ログイン中のユーザーを除く)
