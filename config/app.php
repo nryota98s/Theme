@@ -66,8 +66,8 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-    // ログの出力される時間の変更
-    'timezone' => 'Asia/Tokyo',
+
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -162,7 +162,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-
             /*
              * Package Service Providers...
              */

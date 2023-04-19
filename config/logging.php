@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => env('LOG_CHANNEL', 'single'),
 
     /*
     |--------------------------------------------------------------------------
@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single', 'mail'],
+            'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
 
@@ -102,13 +102,6 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
-        ],
-
-        'mail' => [
-            'driver' => 'mail',
-            'level' => 'error',
-            'to' => 'systemadmin@example.com',
-            // システム管理者のメールアドレス
         ],
 
     ],
