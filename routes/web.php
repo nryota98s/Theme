@@ -46,7 +46,7 @@ Route::get('{userId}/profile/following', 'PostsController@following')->middlewar
 // プロフィールのフォロワー一覧ページ
 Route::get('{userId}/profile/followed', 'PostsController@followed')->middleware('auth');
 // 検索結果表示
-Route::post('/search-form', 'PostsController@search')->middleware('auth');
+Route::get('/search-form', 'PostsController@search')->middleware('auth');
 // フォロー追加
 Route::get('/follow/{id}', 'PostsController@follow')->middleware('auth');
 // フォロー削除機能

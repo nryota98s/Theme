@@ -51,11 +51,11 @@
     <p class="pull-right"><a class="btn btn-success" href="/create-form">投稿する</a></p>
 
     <div class="saerch">
-      {!! Form::open(['url'=>'/search-form']) !!}
-      @csrf
-      {!! Form::text('keyword',null,['placeholder'=>'ユーザー検索','class'=>'search_box']) !!}
-      {!! Form::submit('検索',['class'=>'search_button']) !!}
-      {!! Form::close() !!}
+      <form action='/search-form'>
+        @csrf
+        <input class="search_box" type="text" name="keyword" placeholder="ユーザー検索">
+        <button class="search_button" type="submit">検索</button>
+      </form>
     </div>
 
 
