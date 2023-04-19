@@ -57,3 +57,6 @@ Route::get('/admin', 'AdminController@index')->middleware('auth')->middleware('a
 Route::get('/admin/{id}/delete', 'AdminController@delete')->middleware('auth');
 // 管理者権限画面
 Route::get('/grant-admin', 'AdminController@grant')->middleware('auth');
+// ログの管理
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+// 使用時は　"ターミナルで　"composer require rap2hpoutre/laravel-log-viewer" を行う

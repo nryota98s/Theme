@@ -16,7 +16,9 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.5",
-        "laravelcollective/html": "^6.4"
+        "laravelcollective/html": "^6.4",
+        "monolog/monolog": "^2.9",
+        "rap2hpoutre/laravel-log-viewer": "^2.3"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
