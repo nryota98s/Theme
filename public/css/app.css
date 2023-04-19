@@ -67,6 +67,11 @@ a {
   width: 200px;
 }
 
+header {
+  display: flex;
+  align-items: center;
+}
+
 
 /* main.blade.phpここまで */
 
@@ -182,3 +187,28 @@ a {
 }
 
 /* search.blade.php　ここまで */
+
+
+/* admin.blade.php　ここから */
+#admin_main {
+  display: flex;
+}
+
+.admin_container {
+  margin-left: 50px;
+  width: 80%;
+}
+
+.admin_container h1 {
+  text-align: center;
+}
+
+.admin-table {
+  width: 100%;
+}
+
+.admin-table td {
+  text-align: center;
+}
+
+/* admin.blade.php　ここまで */

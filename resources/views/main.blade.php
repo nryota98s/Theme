@@ -19,6 +19,11 @@
 
   <header>
     <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
+
+    <h3>＜＜社員用＞＞</h3>
+    <p><a href="/admin">管理者ページ</a></p>
+
+
   </header>
   <div class="user_info">
     <img class="icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">

@@ -20,6 +20,8 @@ class Post extends Model
         'contents',
     ];
 
+    protected $table = 'posts';
+
     // postsの一覧表示
     public static function getFollowersPosts()
     {

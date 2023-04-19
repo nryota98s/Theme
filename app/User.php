@@ -46,4 +46,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(self::class, 'follows', 'user_id', 'followed_user_id');
     }
+
+    // isAdmin付与
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
 }
