@@ -21,7 +21,14 @@
     <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
 
     <h3>＜＜社員用＞＞</h3>
+    {{-- 権限がないページに入ろうとした場合 --}}
     <p><a href="/admin">管理者ページ</a></p>
+
+    @if (session('USer_error'))
+    <script>
+      alert('{{ session('USer_error') }}');
+    </script>
+    @endif
 
 
   </header>
@@ -82,8 +89,6 @@
         <td class="post_i">{{ $list->contents }}</td>
 
         <td class="post_i">{{ $list->created_at }}</td>
-
-
 
 
       </tr>

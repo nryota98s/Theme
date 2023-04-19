@@ -65,6 +65,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         // userid　が一致しないページに行かせない
         'userid' => \App\Http\Middleware\UserIdMiddleware::class,
+        // 管理者でない場合特定のページに行かせない
+        'adminid' => \App\Http\Middleware\AdminMiddleware::class,
     ];
 
     protected function schedule(Schedule $schedule)

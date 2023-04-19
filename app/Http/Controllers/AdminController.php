@@ -38,5 +38,13 @@ class AdminController extends Controller
 
     }
 
+    public function grant()
+    {
+        // Userクラスからユーザー名取得し表示
+        $list = User::all();
+        return view('grant-admin', ['list' => $list]);
+
+    }
+
 
 }
