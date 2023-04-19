@@ -55,3 +55,6 @@ Route::get('/follow/{id}/delete', 'PostsController@unfollow');
 Route::get('/admin', 'AdminController@index')->middleware('auth');
 // 投稿削除
 Route::get('/admin/{id}/delete', 'AdminController@delete')->middleware('auth');
+// ログの管理
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+// 使用時は　"ターミナルで　"composer require rap2hpoutre/laravel-log-viewer" を行う
