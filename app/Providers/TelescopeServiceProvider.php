@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
+use Illuminate\Support\Facades\Event;
 
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
@@ -26,11 +27,19 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
             }
 
             return $entry->isReportableException() ||
-                   $entry->isFailedRequest() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
+                $entry->isFailedRequest() ||
+                $entry->isFailedJob() ||
+                $entry->isScheduledTask() ||
+                $entry->hasMonitoredTag();
         });
+
+
+
+        // Telescopeのイベントリスナーの登録
+        Event::listen('telescope.afterRecord', function (array $record) {
+            // イベントリスナーのロジック
+        });
+
     }
 
     /**
@@ -62,10 +71,12 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+        Gate::define('viewTelescope', function (User $user) {
+            $loggedInUser = auth()->user(); // ログイン中のユーザーを取得
+            if ($loggedInUser->is_admin === 1) {
+                return true;
+            }
+            return false;
         });
     }
 }
