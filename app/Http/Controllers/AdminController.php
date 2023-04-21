@@ -38,13 +38,20 @@ class AdminController extends Controller
 
     }
 
-    public function grant()
+    public function grant(Request $request)
     {
+
         // Userクラスからユーザー名取得し表示
         $list = User::all();
-        return view('grant-admin', ['list' => $list]);
+
+        $userId = $request->input('userid');
+
+
+        return view('grant-admin', ['list' => $list, 'userId' => $userId]);
 
     }
+
+
 
 
 }

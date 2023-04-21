@@ -17,8 +17,14 @@
 <header>
   <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
 
-  @if(Auth::user()->isAdmin())
   <h3>＜＜管理者＞＞</h3>
+
+  {{-- 権限がないページに入ろうとした場合の処理 --}}
+  @if (session('USer_error'))
+  <script>
+    alert('{{ session('USer_error') }}');
+  </script>
+  @endif
 
 </header>
 
@@ -38,6 +44,7 @@
           <li><a href="/admin">投稿一覧</a></li>
           <li><a href="/grant-admin">管理者権限</a></li>
           <li><a href="pass-admin">パスワード管理</a></li>
+          <li><a href="/logs">log管理</a></li>
         </ul>
       </div>
 
@@ -48,41 +55,33 @@
 
     <div class='admin_container'>
 
-      <h1>管理者権限管理</h1>
+      <h1>管理者権限</h1>
 
+      <form action="/admin/{id}/grant" method="post">
+        <select name="userid">
+          @foreach ($list as $list)
+          <option value="{{ $list->id }}">{{ $list->name }}</option>
+          @endforeach
+        </select>
 
-      <table class='table table-hover tl'>
-        <tr>
+        <?php  echo('<pre>');
+var_dump($list->id);
+echo('</pre>');?>
 
-          <th>ユーザーネーム</th>
-          <th></th>
+        @if ($list->is_idmin === 0)
+        <p class="p-grant">を新たに管理者に追加する</p>
+        <button type="submit" name="grant" value="true">権限付与</button>
+        @else
+        <p class="p-grant">を管理者から外す</p>
+        <button type="submit" name="grant" value="false">権限解除</button>
+        @endif
 
-        </tr>
+      </form>
 
-        @foreach ($list as $list)
-
-        <tr>
-
-          <td class="post_i">{{ $list->name }}</td>
-
-          <td>
-            <select name="" id="">
-              <option value="">権限なし</option>
-              <option value="">権限あり</option>
-            </select>
-          </td>
-
-        </tr>
-
-        @endforeach
 
       </table>
 
     </div>
-
-    @else
-    <h3>＜＜管理者権限がありません＞＞</h3>
-    @endif
 
 
     <footer>

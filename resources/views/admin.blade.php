@@ -37,6 +37,7 @@
           <li><a href="/admin">投稿一覧</a></li>
           <li><a href="/grant-admin">管理者権限</a></li>
           <li><a href="/pass-admin">パスワード管理</a></li>
+          <li><a href="/logs">log管理</a></li>
         </ul>
       </div>
 

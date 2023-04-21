@@ -170,18 +170,21 @@ header {
   text-align: center;
 }
 
+/* ボタン */
+.fb {
+  text-align: center;
+  border-radius: 5px;
+}
+
 /* フォロー中 */
 .followed {
   background-color: dodgerblue;
-  text-align: center;
   padding: 3px;
-  border-radius: 5px;
 }
 
 /* フォローする */
 .follow {
   border: 1px solid black;
-  border-radius: 5px;
   padding: 3px;
   background-color: white;
 }
@@ -195,6 +198,7 @@ header {
 }
 
 .admin_container {
+  text-align: center;
   margin-left: 50px;
   width: 80%;
 }
@@ -212,3 +216,17 @@ header {
 }
 
 /* admin.blade.php　ここまで */
+
+
+/* grant-admin.blade.php　ここから */
+.p-grant {
+  display: inline;
+}
+
+.grant {
+  border: solid 1px black;
+  background-color: darkgray;
+}
+
+
+/* grant-admin.blade.php　ここまで */
