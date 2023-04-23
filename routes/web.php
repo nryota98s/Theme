@@ -56,9 +56,9 @@ Route::get('/admin', 'AdminController@index')->middleware('auth')->middleware('a
 // 投稿削除
 Route::get('/admin/{id}/delete', 'AdminController@delete')->middleware('auth');
 // 管理者権限画面表示
-Route::get('/grant-admin', 'AdminController@grant')->middleware('auth');
+Route::get('/grant-admin', 'AdminController@grantTop')->middleware('auth');
 // 管理者権限付与
-Route::post('/admin/{id}/grant', 'AdminController@grantAdmin')->middleware('auth');
+Route::get('/admin/{id}/grant', 'AdminController@grantAdmin')->middleware('auth');
 // ログの管理
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 // 使用時は　"ターミナルで　"composer require rap2hpoutre/laravel-log-viewer" を行う

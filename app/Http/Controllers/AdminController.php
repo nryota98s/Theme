@@ -38,17 +38,31 @@ class AdminController extends Controller
 
     }
 
-    public function grant(Request $request)
+    public function grantTop(Request $request)
     {
 
         // Userクラスからユーザー名取得し表示
         $list = User::all();
 
-        $userId = $request->input('userid');
+        return view('grant-admin', ['list' => $list]);
+
+    }
 
 
-        return view('grant-admin', ['list' => $list, 'userId' => $userId]);
-
+    // 権限付与・解除
+    // userテーブルから$userIdを検索して
+    public function grantAdmin(Request $request, $id)
+    {
+        // Userテーブルからパラメータより取得した$idをもとに情報取得
+        $user = User::find($id);
+        // 取得した情報のis_adminがtrueならfalseを、falseならtrueをsaveする
+        if ($user->is_admin == true) {
+            $user->is_admin = false;
+        } else {
+            $user->is_admin = true;
+        }
+        $user->save();
+        return redirect('grant-admin');
     }
 
 

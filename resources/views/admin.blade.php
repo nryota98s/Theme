@@ -76,7 +76,7 @@
 
           <td class="post_i">{{ $list->created_at }}</td>
 
-          <td><a class="btn btn-danger" href="/admin/{{ $list->id }}/delete" onclick="return confirm('[{{ $list->contents }}]という投稿を削除してもよろしいでしょうか？')">削除</a></td>
+          <td><a class="fb follow" href="/admin/{{ $list->id }}/delete" onclick="return confirm('[{{ $list->contents }}]という投稿を削除してもよろしいでしょうか？')">削除</a></td>
 
 
         </tr>

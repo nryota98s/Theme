@@ -57,29 +57,41 @@
 
       <h1>管理者権限</h1>
 
-      <form action="/admin/{id}/grant" method="post">
-        <select name="userid">
-          @foreach ($list as $list)
-          <option value="{{ $list->id }}">{{ $list->name }}</option>
-          @endforeach
-        </select>
+      <table class='table table-hover tl'>
 
-        <?php  echo('<pre>');
-var_dump($list->id);
-echo('</pre>');?>
+        <tr>
 
-        @if ($list->is_idmin === 0)
-        <p class="p-grant">を新たに管理者に追加する</p>
-        <button type="submit" name="grant" value="true">権限付与</button>
-        @else
-        <p class="p-grant">を管理者から外す</p>
-        <button type="submit" name="grant" value="false">権限解除</button>
-        @endif
+          <th>ユーザーネーム</th>
+          <th>ステータス</th>
+          <th></th>
 
-      </form>
+        </tr>
 
+        @foreach ($list as $list)
+
+        <tr>
+
+          <td class="post_i">{{ $list->name }}</td>
+          @if((int)$list->is_admin === 0)
+          <td class="post_i">
+            <p>社員</p>
+          </td>
+          <td><a class="fb follow" href="/admin/{{ $list->id }}/grant" onclick="return confirm('[{{ $list->name }}]に権限付与しますか？')">付与</a></td>
+          @else
+          <td class="post_i">
+            <p>管理者</p>
+          </td>
+          <td><a class="fb followed" href="/admin/{{ $list->id }}/grant" onclick="return confirm('[{{ $list->name }}]の権限を解除しますか？')">解除</a></td>
+          @endif
+          </td>
+
+
+        </tr>
+
+        @endforeach
 
       </table>
+
 
     </div>
 
