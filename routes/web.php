@@ -45,6 +45,10 @@ Route::get('{userId}/profile', 'PostsController@profile')->middleware('auth');
 Route::get('{userId}/profile/following', 'PostsController@following')->middleware('auth');
 // プロフィールのフォロワー一覧ページ
 Route::get('{userId}/profile/followed', 'PostsController@followed')->middleware('auth');
+// passの編集のページ
+Route::get('{userId}/pass-update', 'PostsController@passupdateForm')->middleware('auth');
+// passの編集
+Route::post('/pass/update', 'PostsController@passUpdate')->middleware('auth');
 // 検索結果表示
 Route::get('/search-form', 'PostsController@search')->middleware('auth');
 // フォロー追加
