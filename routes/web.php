@@ -38,13 +38,17 @@ Route::get('/post/{id}/delete', 'PostsController@delete')->middleware('auth');
 // プロフィールの編集のページ　ミドルウェアの入力
 Route::get('{userId}/prof-update', 'PostsController@profileupdateForm')->middleware('auth')->middleware('userid');
 // プロフィールの編集
-Route::post('/profile/update', 'PostsController@profileupdate')->middleware('auth');
+Route::post('/profile/update', 'PostsController@profileupdate')->middleware('auth')->middleware('userid');
 // プロフィールのページ
 Route::get('{userId}/profile', 'PostsController@profile')->middleware('auth');
 // プロフィールのフォロー中のユーザー一覧ページ
 Route::get('{userId}/profile/following', 'PostsController@following')->middleware('auth');
 // プロフィールのフォロワー一覧ページ
 Route::get('{userId}/profile/followed', 'PostsController@followed')->middleware('auth');
+// プロフィールのパスワード変更画面表示
+Route::get('{userId}/pass-update', 'PostsController@passupdateForm')->middleware('auth')->middleware('userid');
+// プロフィールのパスワード変更
+Route::post('/pass/update', 'PostsController@passUpdate')->middleware('auth')->middleware('userid');
 // 検索結果表示
 Route::get('/search-form', 'PostsController@search')->middleware('auth');
 // フォロー追加
@@ -54,11 +58,17 @@ Route::get('/follow/{id}/delete', 'PostsController@unfollow');
 // 管理者画面
 Route::get('/admin', 'AdminController@index')->middleware('auth')->middleware('adminid');
 // 投稿削除
-Route::get('/admin/{id}/delete', 'AdminController@delete')->middleware('auth');
+Route::get('/admin/{id}/delete', 'AdminController@delete')->middleware('auth')->middleware('adminid');
 // 管理者権限画面表示
-Route::get('/grant-admin', 'AdminController@grantTop')->middleware('auth');
+Route::get('/grant-admin', 'AdminController@grantTop')->middleware('auth')->middleware('adminid');
 // 管理者権限付与
-Route::get('/admin/{id}/grant', 'AdminController@grantAdmin')->middleware('auth');
+Route::get('/admin/{id}/grant', 'AdminController@grantAdmin')->middleware('auth')->middleware('adminid');
+// パスワード管理画面
+Route::get('/pass-admin', 'AdminController@grantPass')->middleware('auth')->middleware('adminid');
+// パスワード変更画面
+Route::get('/passup-admin', 'AdminController@passupdateForm')->middleware('auth')->middleware('adminid');
+// パスワードリセット
+Route::post('/pass/reset', 'AdminController@passReset')->middleware('auth')->middleware('adminid');
 // ログの管理
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 // 使用時は　"ターミナルで　"composer require rap2hpoutre/laravel-log-viewer" を行う

@@ -43,7 +43,7 @@
         <ul>
           <li><a href="/admin">投稿一覧</a></li>
           <li><a href="/grant-admin">管理者権限</a></li>
-          <li><a href="pass-admin">パスワード管理</a></li>
+          <li><a href="/pass-admin">パスワード管理</a></li>
           <li><a href="/logs">log管理</a></li>
         </ul>
       </div>
@@ -55,43 +55,19 @@
 
     <div class='admin_container'>
 
-      <h1>管理者権限</h1>
+      <h1>パスワード管理</h1>
 
-      <table class='table table-hover tl'>
-
-        <tr>
-
-          <th>ユーザーネーム</th>
-          <th>ステータス</th>
-          <th></th>
-
-        </tr>
-
-        @foreach ($list as $list)
-
-        <tr>
-
-          <td class="post_i">{{ $list->name }}</td>
-          @if((int)$list->is_admin === 0)
-          <td class="post_i">
-            <p>社員</p>
-          </td>
-          <td><a class="fb follow" href="/admin/{{ $list->id }}/grant" onclick="return confirm('[{{ $list->name }}]に権限付与しますか？')">付与</a></td>
-          @else
-          <td class="post_i">
-            <p>管理者</p>
-          </td>
-          <td><a class="fb followed" href="/admin/{{ $list->id }}/grant" onclick="return confirm('[{{ $list->name }}]の権限を解除しますか？')">解除</a></td>
-          @endif
-          </td>
-
-
-        </tr>
-
-        @endforeach
-
-      </table>
-
+      <form action="/passup-admin">
+        @csrf
+        <label for="user_id">ユーザーを選択してください：</label>
+        <select name="user_id" id="user_id">
+          @foreach ($list as $list)
+          <option value="{{ $list->id }}">{{ $list->name }}</option>
+          @endforeach
+        </select>
+        <br><br>
+        <button type="submit">パスワード変更</button>
+      </form>
 
     </div>
 
