@@ -45,10 +45,12 @@ Route::get('{userId}/profile', 'PostsController@profile')->middleware('auth');
 Route::get('{userId}/profile/following', 'PostsController@following')->middleware('auth');
 // プロフィールのフォロワー一覧ページ
 Route::get('{userId}/profile/followed', 'PostsController@followed')->middleware('auth');
+
 // プロフィールのパスワード変更画面表示
 Route::get('{userId}/pass-update', 'PostsController@passupdateForm')->middleware('auth')->middleware('userid');
 // プロフィールのパスワード変更
 Route::post('/pass/update', 'PostsController@passUpdate')->middleware('auth')->middleware('userid');
+
 // 検索結果表示
 Route::get('/search-form', 'PostsController@search')->middleware('auth');
 // フォロー追加
