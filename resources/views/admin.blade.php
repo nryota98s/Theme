@@ -1,105 +1,40 @@
-<!DOCTYPE html>
+@extends('admin-app')
 
-<html>
+@section('title','投稿一覧')
 
+@section('content')
+<table class='admin-table'>
 
-<head>
+  <tr>
 
-  <meta charset='utf-8"'>
+    <th>ユーザーネーム</th>
 
-  <link rel='stylesheet' href="{{ asset('/css/app.css') }}">
+    <th>投稿内容</th>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th>投稿日時</th>
 
-</head>
+    <th></th>
 
+    <th></th>
 
-<header>
-  <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
+  </tr>
 
-  <h3>＜＜管理者＞＞</h3>
+  @foreach ($list as $list)
 
-</header>
+  <tr>
 
-<body>
+    <td class="post_i">{{ $list->user_name }}</td>
 
-  <div id="admin_main">
+    <td class="post_i">{{ $list->contents }}</td>
 
-    <div class="menu">
+    <td class="post_i">{{ $list->created_at }}</td>
 
-
-      <img class="icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
-      <p>管理者：{{ Auth::user()->name }}</p>
-
-
-      <div>
-        <ul>
-          <li><a href="/admin">投稿一覧</a></li>
-          <li><a href="/grant-admin">管理者権限</a></li>
-          <li><a href="/pass-admin">パスワード管理</a></li>
-          <li><a href="/logs">log管理</a></li>
-        </ul>
-      </div>
+    <td><a class="fb follow" href="/admin/{{ $list->id }}/delete" onclick="return confirm('[{{ $list->contents }}]という投稿を削除してもよろしいでしょうか？')">削除</a></td>
 
 
-    </div>
+  </tr>
 
+  @endforeach
 
-
-    <div class='admin_container'>
-
-      <h1>投稿一覧</h1>
-
-      <table class='admin-table'>
-
-        <tr>
-
-          <th>ユーザーネーム</th>
-
-          <th>投稿内容</th>
-
-          <th>投稿日時</th>
-
-          <th></th>
-
-          <th></th>
-
-        </tr>
-
-        @foreach ($list as $list)
-
-        <tr>
-
-          <td class="post_i">{{ $list->user_name }}</td>
-
-          <td class="post_i">{{ $list->contents }}</td>
-
-          <td class="post_i">{{ $list->created_at }}</td>
-
-          <td><a class="fb follow" href="/admin/{{ $list->id }}/delete" onclick="return confirm('[{{ $list->contents }}]という投稿を削除してもよろしいでしょうか？')">削除</a></td>
-
-
-        </tr>
-
-        @endforeach
-
-      </table>
-
-    </div>
-
-  </div>
-
-
-
-  <footer>
-
-
-
-  </footer>
-
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-</body>
-
-
-</html>
+</table>
+@endsection
