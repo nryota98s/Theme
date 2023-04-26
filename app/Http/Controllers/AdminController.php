@@ -65,7 +65,37 @@ class AdminController extends Controller
         return redirect('grant-admin');
     }
 
+    // パスワード管理ページ
+    public function grantPass()
+    {
+        $list = User::all();
+        return view('pass-admin', ['list' => $list]);
+    }
 
+    // パスワード変更画面
+    public function passupdateForm(Request $request)
+    {
+        $userId = $request->input('user_id');
+        $post = User::getUserProfile($userId);
+        return view('passup-admin', ['post' => $post]);
+
+    }
+
+    public function passReset(Request $request)
+    {
+        $this->validate($request, [
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+            ],
+        ]);
+        $newpass = $request->input('new_password');
+        $id = $request->input('id');
+        $usermodel = new User;
+        return $usermodel->passwordReset($newpass, $id);
+    }
 
 
 }

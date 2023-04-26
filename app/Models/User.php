@@ -138,5 +138,14 @@ class User extends Model
         return redirect()->back()->with('success', 'パスワードを更新しました');
     }
 
+    // 管理画面パスワードリセット
+    // パスワードの変更
+    public function passwordReset($newpass, $id)
+    {
+        self::where('id', $id)
+            ->update(['password' => bcrypt($newpass)]);
+        return redirect()->back()->with('success', 'パスワードを更新しました');
+    }
+
 
 }
