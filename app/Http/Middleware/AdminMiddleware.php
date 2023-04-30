@@ -21,7 +21,7 @@ class AdminMiddleware
 
         // もし管理者でない場合エラーメッセージを返す
         if ((int) $adminId === 0) {
-            return redirect()->back()->with('USer_error', 'アクセス権限がありません');
+            return redirect()->back()->with('admin_error', 'アクセス権限がありません');
         }
 
         return $next($request);

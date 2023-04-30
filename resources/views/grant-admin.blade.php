@@ -1,4 +1,4 @@
-@extends('admin-app')
+@extends('layouts.admin-app')
 
 @section('title','管理者権限')
 

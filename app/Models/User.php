@@ -139,7 +139,6 @@ class User extends Model
     }
 
     // 管理画面パスワードリセット
-    // パスワードの変更
     public function passwordReset($newpass, $id)
     {
         self::where('id', $id)

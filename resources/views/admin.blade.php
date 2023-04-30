@@ -1,4 +1,4 @@
-@extends('admin-app')
+@extends('layouts.admin-app')
 
 @section('title','投稿一覧')
 
