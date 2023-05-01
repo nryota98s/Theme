@@ -38,7 +38,7 @@ Route::get('/post/{id}/delete', 'PostsController@delete')->middleware('auth');
 // プロフィールの編集のページ　ミドルウェアの入力
 Route::get('{userId}/prof-update', 'PostsController@profileupdateForm')->middleware('auth')->middleware('userid');
 // プロフィールの編集
-Route::post('/profile/update', 'PostsController@profileupdate')->middleware('auth')->middleware('userid');
+Route::post('/profile/update', 'PostsController@profileupdate')->middleware('auth');
 // プロフィールのページ
 Route::get('{userId}/profile', 'PostsController@profile')->middleware('auth');
 // プロフィールのフォロー中のユーザー一覧ページ
@@ -48,7 +48,7 @@ Route::get('{userId}/profile/followed', 'PostsController@followed')->middleware(
 // プロフィールのパスワード変更画面表示
 Route::get('{userId}/pass-update', 'PostsController@passupdateForm')->middleware('auth')->middleware('userid');
 // プロフィールのパスワード変更
-Route::post('/pass/update', 'PostsController@passUpdate')->middleware('auth')->middleware('userid');
+Route::post('/pass/update', 'PostsController@passUpdate')->middleware('auth');
 // 検索結果表示
 Route::get('/search-form', 'PostsController@search')->middleware('auth');
 // フォロー追加
