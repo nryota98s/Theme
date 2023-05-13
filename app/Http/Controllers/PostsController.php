@@ -165,8 +165,7 @@ class PostsController extends Controller
         // フォロー中のユーザー表示
         $list = User::getFollowingUser();
 
-
-        return view('following', ['list' => $list, 'post' => $post]);
+        return view('following', ['list' => $list, 'post' => $post,]);
     }
 
 
@@ -178,8 +177,12 @@ class PostsController extends Controller
         // フォロワー表示
         $list = User::getFollowedUser();
 
+        // フォロー中のユーザーのid取得
+        $followmodel = new Follow;
+        $id = $followmodel->getFollowedUserIdsByUserId($userid);
 
-        return view('followed', ['list' => $list, 'post' => $post]);
+
+        return view('followed', ['list' => $list, 'post' => $post, 'id' => $id]);
     }
 
 
@@ -203,6 +206,7 @@ class PostsController extends Controller
     // フォローする
     public function follow($userId)
     {
+        // attach($userId) メソッドは、Auth::user() の followAction() リレーションシップに新しい $userId の値を追加するために使用
         Auth::user()->followAction()->attach($userId);
         return back();
     }
@@ -210,6 +214,7 @@ class PostsController extends Controller
     // フォロー解除
     public function unfollow($userId)
     {
+        // detach($userId) メソッドは、Auth::user() の followAction() リレーションシップから指定された $userId の値を削除するために使用
         Auth::user()->followAction()->detach($userId);
         return back();
     }

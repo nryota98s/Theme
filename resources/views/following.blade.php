@@ -14,16 +14,16 @@
     <p class="fing_i">{{ $list->name }}</p>
 
     <p class="fing_i">{{ $list->bio }}</p>
-    <p>フォロー中</p>
+    <p class="fb followed"><a href="/follow/{{ $list->id }}/delete" onclick="return confirm('[{{ $list->name }}]のフォローを外しますか？')">フォロー中</a></p>
   </div>
 
 </div>
 
 @endforeach
 
-@if(empty($list))
-<p>フォローしているユーザーはいません</p>
-@endif
+@if(empty($list->id))
+<h2>フォローしているユーザーはいません</h2>
+@else
 
 
 {{--フォローしているユーザーの投稿一覧 --}}
@@ -57,6 +57,6 @@
   @endforeach
 
 </table>
-
+@endif
 
 @endsection

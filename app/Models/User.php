@@ -129,18 +129,42 @@ class User extends Model
     // パスワードの変更
     public function passwordUpdate($pass, $newpass, $id)
     {
-        if (!Hash::check($pass, Auth::user()->password)) {
-            // エラーを"pass-update"に返す(エラーだった場合に直前のデータを残すために->back()を使用)
+
+        // 他のユーザーによって既に使用されているかどうかをチェック
+        $hashed_passwords = self::where('id', '<>', $id)
+            ->pluck('password')
+            ->toArray();
+        foreach ($hashed_passwords as $hashed_password) {
+            if (Hash::check($newpass, $hashed_password)) {
+                // エラーを"pass-update"に返す(エラーだった場合に直前のデータを残すために->back()を使用)
+                return redirect()->back()->with('error', '既に登録されているパスワードは指定できません');
+            }
+        }
+
+
+        if (Hash::check($pass, Auth::user()->password)) {
+            self::where('id', $id)->update(['password' => bcrypt($newpass)]);
+            return redirect()->back()->with('success', 'パスワードを更新しました');
+        } else {
             return redirect()->back()->with('error', 'パスワードが正しくありません');
         }
-        self::where('id', $id)
-            ->update(['password' => bcrypt($newpass)]);
-        return redirect()->back()->with('success', 'パスワードを更新しました');
     }
+
 
     // 管理画面パスワードリセット
     public function passwordReset($newpass, $id)
     {
+        // 他のユーザーによって既に使用されているかどうかをチェック
+        $hashed_passwords = self::where('id', '<>', $id)
+            ->pluck('password')
+            ->toArray();
+        foreach ($hashed_passwords as $hashed_password) {
+            if (Hash::check($newpass, $hashed_password)) {
+                // エラーを"pass-update"に返す(エラーだった場合に直前のデータを残すために->back()を使用)
+                return redirect()->back()->with('error', '既に登録されているパスワードは指定できません');
+            }
+        }
+
         self::where('id', $id)
             ->update(['password' => bcrypt($newpass)]);
         return redirect()->back()->with('success', 'パスワードを更新しました');
