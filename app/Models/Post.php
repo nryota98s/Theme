@@ -139,4 +139,10 @@ class Post extends Model
         return $post;
     }
 
+    // usersテーブルとリレーション
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_name', 'name');
+    }
+
 }
