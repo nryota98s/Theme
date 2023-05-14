@@ -43,7 +43,7 @@
     @csrf
     <div class="form-group">
 
-      <input type="hidden" name="id" id="{{ $post->id }}">
+      <input type="hidden" name="id" value="{{ $post->id }}">
 
       <div class="icon_f">
         <p>新しいパスワード</p>

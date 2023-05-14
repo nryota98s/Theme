@@ -96,6 +96,7 @@
       <p class="fing_i"><a href="{{ $users->id}}/profile">{{ $users->name }}</a></p>
       <p class="fing_i">{{ $users->bio }}</p>
 
+      {{-- array_intersect() 関数は、2つ以上の配列の共通する値を返す（$id=現在フォロー中のユーザーid） --}}
       @if(count(array_intersect([$users->id],$id)) > 0)
       <p class="fb followed"><a href="/follow/{{ $users->id }}/delete" onclick="return confirm('[{{ $users->name }}]のフォローを外しますか？')">フォロー中</a></p>
       @else

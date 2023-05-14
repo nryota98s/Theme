@@ -64,13 +64,9 @@ class User extends Model
             $filename = time() . '_' . $file->getClientOriginalName();
             // publicディスクを使用して、('フォルダ名', ファイル, ファイル名)を指定して保存
             Storage::disk('public')->putFileAs('icon', $file, $filename);
-        }
-        // imageがdefalut.png(初期状態)でない場合
-        else if (Auth::user()->image != 'default.png') {
-            $filename = Auth::user()->image;
         } else {
             //imageにファイル名がない場合、中身が空のためimageカラムの中身は変わらない
-            $filename = null;
+            $filename = Auth::user()->image;
         }
 
         // ハッシュ化されたパスワードとユーザーが入力したパスワードが一致しない場合
@@ -129,14 +125,14 @@ class User extends Model
     // パスワードの変更
     public function passwordUpdate($pass, $newpass, $id)
     {
-        if (!Hash::check($pass, Auth::user()->password)) {
-            // エラーを"pass-update"に返す(エラーだった場合に直前のデータを残すために->back()を使用)
+        if (Hash::check($pass, Auth::user()->password)) {
+            self::where('id', $id)->update(['password' => bcrypt($newpass)]);
+            return redirect()->back()->with('success', 'パスワードを更新しました');
+        } else {
             return redirect()->back()->with('error', 'パスワードが正しくありません');
         }
-        self::where('id', $id)
-            ->update(['password' => bcrypt($newpass)]);
-        return redirect()->back()->with('success', 'パスワードを更新しました');
     }
+
 
     // 管理画面パスワードリセット
     public function passwordReset($newpass, $id)
@@ -145,6 +141,5 @@ class User extends Model
             ->update(['password' => bcrypt($newpass)]);
         return redirect()->back()->with('success', 'パスワードを更新しました');
     }
-
 
 }

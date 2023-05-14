@@ -2,7 +2,7 @@
 
 @section('container')
 
-<h2>フォロー中のユーザー</h2>
+<h2>フォロワー一覧</h2>
 @foreach ($list as $list)
 
 
@@ -14,16 +14,22 @@
     <p class="fing_i">{{ $list->name }}</p>
 
     <p class="fing_i">{{ $list->bio }}</p>
-    <p>フォローする</p>
+
+    @if(count(array_intersect([$list->id],$id)) > 0)
+    <p class="fb followed"><a href="/follow/{{ $list->id }}/delete" onclick="return confirm('[{{ $list->name }}]のフォローを外しますか？')">フォロー中</a></p>
+    @else
+    <p class="fb follow"><a href="/follow/{{ $list->id }}">フォローする</a></p>
+
+    @endif
   </div>
 
 </div>
 
 
 @endforeach
-@if(empty($list))
-<p>フォロワーはいません</p>
-@endif
+@if(empty($list->id))
+<h2>フォロワーはいません</h2>
+@else
 {{--フォロワーの投稿一覧 --}}
 <table class='table table-hover tl'>
   <h2>フォロワーの投稿一覧</h2>
@@ -53,5 +59,5 @@
   @endforeach
 
 </table>
-
+@endif
 @endsection
