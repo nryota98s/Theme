@@ -16,8 +16,6 @@ class Posts extends Migration
         Schema::create('posts', function (Blueprint $table) {
 
             $table->increments('id');
-            // 追記
-            $table->integer('user_id');
 
             $table->string('user_name');
 

@@ -9,7 +9,6 @@ use Faker\Generator as Faker;
 $factory->define(Post::class, function (Faker $faker) {
     $user = User::inRandomOrder()->first();
     return [
-        'user_id' => $user->id,
         'user_name' => $user->name,
         'contents' => $faker->realText($maxNbChars = 50),
     ];

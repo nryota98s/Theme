@@ -142,10 +142,4 @@ class User extends Model
         return redirect()->back()->with('success', 'パスワードを更新しました');
     }
 
-
-    // postsテーブルとリレーション
-    public function posts()
-    {
-        return $this->hasMany(Post::class, 'user_name', 'name');
-    }
 }

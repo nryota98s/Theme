@@ -73,7 +73,7 @@
 
     <td class="post_i">{{ $list->contents }}</td>
 
-    <td class="post_i">{{ $list->created_at }}</td>
+    <td class="post_i">{{ $list->updated_at }}</td>
 
 
   </tr>

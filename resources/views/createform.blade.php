@@ -13,6 +13,7 @@
 {!! Form::open(['url' => 'post/create']) !!}
 @csrf
 <div class="form-group">
+  {!! Form::hidden('hidden', 'user_id',Auth::user()->user_id, ) !!}
 
   {!! Form::input('text', 'name',Auth::user()->name, ['required', 'class' => ['form-control','form_n'], 'placeholder' => 'ユーザーネーム']) !!}
   {!! Form::input('text', 'newPost', null, ['required', 'class' => ['form-control','form_p'], 'placeholder' => '投稿内容']) !!}
