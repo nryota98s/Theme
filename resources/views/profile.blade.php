@@ -71,7 +71,7 @@
 
     <td class="post_i">{{ $posts->contents }}</td>
 
-    <td class="post_i">{{ $posts->created_at }}</td>
+    <td class="post_i">{{ $posts->updated_at }}</td>
     {{-- このマイページがログインしているユーザーのidと一緒なら表示 --}}
     @if(Auth::check() && $name->id === Auth::user()->id)
     <td class="post_b"><a class="btn btn-primary" href="/post/{{ $posts->id }}/update-form">更新</a></td>

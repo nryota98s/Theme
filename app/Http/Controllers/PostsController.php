@@ -61,8 +61,9 @@ class PostsController extends Controller
 
         $name = $request->input('name');
         $post = $request->input('newPost');
+        $user_id = $request->input('user_id');
 
-        Post::createPost($name, $post);
+        Post::createPost($name, $post, $user_id);
 
         return redirect('/main');
 

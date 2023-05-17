@@ -1,14 +1,17 @@
 <?php
 use Illuminate\Database\Seeder;
+use App\Models\Follow;
 use App\User;
-use App\Follow;
+use Faker\Generator as Faker;
 
 class FollowsTableSeeder extends Seeder
 {
     public function run()
     {
-        // ユーザーをランダムに選択し、フォロー関係を作成する
+        // 古いデータを削除し新しいデータに書き換える
+        Follow::truncate();
         $users = User::all();
+        // ユーザーをランダムに選択し、フォロー関係を作成する
         foreach ($users as $user) {
             $followed_users = $users->random(3); // ランダムに3人をフォローする
             foreach ($followed_users as $followed_user) {

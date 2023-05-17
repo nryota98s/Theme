@@ -44,7 +44,7 @@ class Post extends Model
 
     // 投稿の実施
     // static を使うことでコントローラー上で\App\Models\Post::createPost($name, $post);と入れるだけで代入してメソッドが実行される
-    public static function createPost($name, $post)
+    public static function createPost($name, $post, $user_id)
     {
         // self キーワードを使用してクラス内の別の静的メソッドを呼び出す
         // Call to undefined functionとなるためself::をつけることでコントローラーでcreatePostを呼び出した時に同様の処理ができる
@@ -52,7 +52,8 @@ class Post extends Model
         // だがカラムがあっていればなんでも入力できてしまうのでバリデーションを行う
         return self::create([
             'user_name' => $name,
-            'contents' => $post
+            'contents' => $post,
+            'user_id' => $user_id,
         ]);
     }
 

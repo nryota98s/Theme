@@ -16,6 +16,10 @@
 
 <body>
 
+  {{-- 時間表示 --}}
+  {{--
+  <p>{{ $testDateTime }}</p> --}}
+
 
   <header>
     <a href="/main"> <img class="logo" src="{{ asset('storage/icon/logo.png') }}" alt="プロフィール画像"></a>
