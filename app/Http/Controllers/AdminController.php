@@ -40,9 +40,9 @@ class AdminController extends Controller
 
     public function grantTop(Request $request)
     {
-
-        // Userクラスからユーザー名取得し表示
-        $list = User::all();
+        $usermodel = new User;
+        // userの一覧表示(ログイン中のユーザーを除く)
+        $list = $usermodel->getExcludedUsers();
 
         return view('grant-admin', ['list' => $list]);
 

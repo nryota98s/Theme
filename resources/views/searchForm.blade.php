@@ -5,8 +5,10 @@
 
 <table class='table table-hover tl'>
 
+  @if(preg_match($pattern, $keyword)||$items->count() === 0)
+  <h2 class="s_results">検索結果は０件です</h2>
 
-  @if(!$items->isEmpty())
+  @elseif($items->count()>0)
   @foreach ($items as $item)
 
   <tr>
@@ -29,8 +31,7 @@
   </tr>
 
   @endforeach
-  @else
-  <p class="s_results">検索結果は０件です</p>
+
   @endif
 
 

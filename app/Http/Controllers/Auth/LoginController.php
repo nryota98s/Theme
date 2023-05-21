@@ -44,7 +44,7 @@ class LoginController extends Controller
 
     public function maxAttempts()
     {
-        return 3; // 最大3回までログイン試行を許可する
+        return 2; // 最大3回までログイン試行を許可する
     }
 
     public function decayMinutes()
