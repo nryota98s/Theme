@@ -81,6 +81,12 @@ class User extends Model
                 'image' => $filename
             ]);
 
+        // ユーザー名を変更後投稿の名前も変更
+        if (!empty($name)) {
+            Post::where("user_name", Auth::user()->name)
+                ->update(['user_name' => $name]);
+        }
+
         return redirect('/main');
     }
 
