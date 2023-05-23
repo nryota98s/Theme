@@ -18,10 +18,10 @@ class Users extends Migration
             $table->increments('id');
 
             $table->string('name', 255)->unique();
-            ;
+
 
             $table->string('email', 255)->unique();
-            ;
+
 
             $table->string('password', 255);
 

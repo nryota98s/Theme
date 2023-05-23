@@ -51,15 +51,12 @@ class PostsController extends Controller
     {
         // バリデーション
         $this->validate($request, [
-            'name' => [
-                'required',
-                'regex:/^[^\s]+([\s　][^\s]+)*$/u',
-            ],
+
             'newPost' => ['required', 'regex:/^[^\s]+([\s　][^\s]+)*$/u', 'max:150']
 
         ]);
 
-        $name = $request->input('name');
+        $name = Auth::user()->name;
         $post = $request->input('newPost');
         $user_id = $request->input('user_id');
 
@@ -194,11 +191,12 @@ class PostsController extends Controller
         $keyword = $request->input('keyword');
         $items = User::searchKey($keyword);
         $userid = User::User();
+        $pattern = "/[　\s_%]/u";
 
         // $followedからfollowed_user_idを配列で抽出
         $id = Follow::getFollowedUserIdsByUserId($userid);
 
-        return view('searchForm', ['keyword' => $keyword, 'items' => $items, 'id' => $id]);
+        return view('searchForm', ['keyword' => $keyword, 'items' => $items, 'id' => $id, 'pattern' => $pattern]);
     }
 
 
