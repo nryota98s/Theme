@@ -29,12 +29,14 @@
 
   <p>自己紹介文</p>
   {!! Form::input('text', 'upBio', $post->bio, ['', 'class' => 'form-control']) !!}
+
   <p>アイコン画像</p>
   <img class="old_icon" src="{{ asset('storage/icon/'. Auth::user()->image) }}" alt="プロフィール画像">
   {{ Form::file('image', ['class' => 'i-control']) }}
   <p>パスワード</p>
   {{Form::password('password', ['class' => 'i-control'])}}
 </div>
+
 
 </div>
 
