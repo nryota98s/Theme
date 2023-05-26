@@ -18,6 +18,14 @@
 
 
 @endif
+<div class="alert alert-danger">
+  <ul>
+    @foreach ($errors->all() as $error)
+    <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+</div>
+
 {{--'enctype':ファイルを含むフォームデータをサーバーに送信するために使用されるもの。 --}}
 {!! Form::open(['url' => '/profile/update', 'enctype' => 'multipart/form-data']) !!}
 @csrf

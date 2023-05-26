@@ -142,18 +142,24 @@ class PostsController extends Controller
 
 
     // profileの更新
-
     public function profileupdate(Request $request)
     {
         $id = $request->input('id');
         $name = $request->input('upName');
         $bio = $request->input('upBio');
         $pass = $request->input('password');
+
+        $this->validate($request, [
+            // ユニークルールにidを追加することで今のユーザーを除く重複を認めなくする。
+            'upName' => 'required|unique:users,name,' . $id,
+        ], [
+                // カスタムメッセージ
+                'unique' => 'そのユーザーネームは既に使用されています。',
+            ]);
+
         $file = $request->file('image');
         return User::profile($id, $name, $bio, $pass, $request, $file);
     }
-
-
     public function following($userid)
     {
 
